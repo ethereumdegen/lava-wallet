@@ -1,7 +1,7 @@
 
  ## Lava Wallet
 
-  Deposit tokens in this smart contract in order to allow other users to withdraw them with offchain digital signatures 
+  Deposit tokens in this smart contract in order to allow other dapps/users to withdraw/transfer them on your behalf with your offchain digital signatures.
 
 
  #### Background
