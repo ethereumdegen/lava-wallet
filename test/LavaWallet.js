@@ -31,21 +31,11 @@ contract("LavaWallet", (accounts) => {
 
   var walletContract ;
   var tokenContract;
-  //var kingContract;
-  var mintHelperContract;
-//  var doubleKingsRewardContract;
-    var MiningDelegate;
 
 
   it("can deploy ", async function () {
     walletContract = getInstance("LavaWallet")
-    tokenContract = getInstance("_0xBitcoinToken")
-  //  kingContract = getInstance("MiningKing")
-    mintHelperContract = getInstance("MintHelper")
-    miningDelegateContract = getInstance("MiningDelegate")
-  //  doubleKingsRewardContract = getInstance("DoubleKingsReward")
-
-
+    tokenContract = getInstance("StandardToken")
 
 
 
