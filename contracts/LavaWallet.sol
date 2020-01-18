@@ -320,28 +320,32 @@ contract LavaWallet is ECRecovery{
 
 
        //transferRelayerReward into this contract (should be approved to it) and then to the relayer!
-       //this is reverting 
-       require(transferTokensFrom(from, address(this), token, relayerRewardTokens));
-       require(transferTokens(msg.sender, token, relayerRewardTokens));
+       //this is reverting if amounts are nonzero
+      require(transferTokensFrom(from, address(this), token, relayerRewardTokens));
+      require(transferTokens(msg.sender, token, relayerRewardTokens));
 
 
        //transfer tokens into this contract to stage them for sending out
-       require(transferTokensFrom(from, address(this), token, tokens));
+      require(transferTokensFrom(from, address(this), token, tokens));
 
 
        return true;
    }
 
-   //No approve needed, only from msg.sender
+   //why wont this work w approve ??
    function transferTokens(address to, address token, uint tokens) public returns (bool success) {
-        return ERC20Interface(token).transfer(to, tokens );
+         ERC20Interface(token).transfer(to, tokens );
+
+         return true;
     }
 
 
     ///transfer tokens within the lava balances
     //Requires approval
    function transferTokensFrom( address from, address to,address token,  uint tokens) public returns (bool success) {
-      return ERC20Interface(token).transferFrom(from, to, tokens );
+        ERC20Interface(token).transferFrom(from, to, tokens );  //??
+
+       return true;
    }
 
 
@@ -373,7 +377,7 @@ contract LavaWallet is ECRecovery{
         //check to make sure that signature == ecrecover signature
        bytes32 sigHash = getLavaTypedDataHash(methodName,relayAuthority,from,to,wallet,token,tokens,relayerRewardTokens,expires,nonce);
 
-       require(_absorbTokensWithSignature(methodName,relayAuthority,from,to,wallet,tokens,relayerRewardTokens,expires,nonce,sigHash,signature));
+       require(_absorbTokensWithSignature(methodName,relayAuthority,from,to, token,tokens,relayerRewardTokens,expires,nonce,sigHash,signature));
 
        bytes memory method = bytes(methodName);
 
@@ -397,7 +401,7 @@ contract LavaWallet is ECRecovery{
      //check to make sure that signature == ecrecover signature
      bytes32 sigHash = getLavaTypedDataHash(methodName,relayAuthority,from,to,wallet,token, tokens,relayerRewardTokens,expires,nonce);
 
-     require(_absorbTokensWithSignature(methodName,relayAuthority,from,to,wallet,tokens,relayerRewardTokens,expires,nonce,sigHash,signature));
+     require(_absorbTokensWithSignature(methodName,relayAuthority,from,to, token,tokens,relayerRewardTokens,expires,nonce,sigHash,signature));
 
         //this is failing?
     ///   require(transferTokens(  to, token,  tokens));

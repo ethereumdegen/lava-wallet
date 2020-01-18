@@ -399,7 +399,7 @@ contract("LavaWallet", (accounts) => {
 
                            var response = await   tokenContract.methods.approve(
                                   walletContract.options.address,
-                                  3000000
+                                  300000000
                                   ).send( {from: test_account.address} )
 
                                //this is reverting !
