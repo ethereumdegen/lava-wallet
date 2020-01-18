@@ -21,8 +21,8 @@ var LavaTestUtils = require("./LavaTestUtils");
 var lavaTestUtils = new LavaTestUtils();
 
 var test_account= {
-    'address': '0x087964cd8b33ea47c01fbe48b70113ce93481e01',
-    'privateKey': 'dca672104f895219692175d87b04483d31f53af8caad1d7348d269b35e21c3df'
+    'address': '0xE90697FEdB5Fe9431b153c9b30bb6Abc6051c855',
+    'privateKey': '0xc0c3121ff75c8076f0f0f9e7e9d3e5129141b16d2d7539d10227c24c16b13ab5'
 }
 
 
