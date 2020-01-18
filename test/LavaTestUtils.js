@@ -81,20 +81,20 @@ function typedSignatureHash(typedData) {
     return hardcodedSchemaHash;
  }
 
- static getLavaTypedDataHash(typedData,types)
- {
-   var typedDataHash = ethUtil.sha3(
-       Buffer.concat([
-           Buffer.from('1901', 'hex'),
-  //         EIP712Helper.structHash('EIP712Domain', typedData.domain, types),
-           EIP712HelperV3.structHash(typedData.primaryType, typedData.message, types),
-       ]),
-   );
+  static getLavaTypedDataHash(typedData,types)
+  {
+    var typedDataHash = ethUtil.sha3(
+        Buffer.concat([
+            Buffer.from('1901', 'hex'),
+            EIP712HelperV3.structHash('EIP712Domain', typedData.domain, types),
+            EIP712HelperV3.structHash(typedData.primaryType, typedData.message, types),
+        ]),
+    );
 
-   return typedDataHash;
- }
-
-
+    console.log('meep 1', EIP712HelperV3.structHash('EIP712Domain', typedData.domain, types))
+    console.log('meep 2', EIP712HelperV3.structHash(typedData.primaryType, typedData.message, types))
+    return typedDataHash;
+  }
 
   static getLavaTypedDataFromParams(   methodName,relayAuthority,from,
     to,walletAddress,tokenAddress, tokenAmount, relayerRewardTokens,expires,nonce )
@@ -226,7 +226,7 @@ function typedSignatureHash(typedData) {
 
      }
 
-     static lavaPacketHasValidSignature(   typedData, signature, signersPublicAddress){
+     static lavaPacketHasValidSignature(   typedData, signature){
 
        var sigHash = LavaTestUtils.getLavaTypedDataHash( typedData, typedData.types);
        var msgBuf = ethUtil.toBuffer(signature)
@@ -243,7 +243,7 @@ function typedSignatureHash(typedData) {
 
        console.log('recovered signer pub address',recoveredSignatureSigner.toLowerCase())
        //make sure the signer is the depositor of the tokens
-       return signersPublicAddress == recoveredSignatureSigner.toLowerCase();
+       return recoveredSignatureSigner.toLowerCase();
 
      }
 

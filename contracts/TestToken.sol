@@ -194,7 +194,7 @@ contract Owned {
 
 // ----------------------------------------------------------------------------
 
-contract _0xBitcoinToken is ERC20Interface, Owned {
+contract TestToken is ERC20Interface, Owned {
 
     using SafeMath for uint;
     using ExtendedMath for uint;
@@ -267,9 +267,9 @@ contract _0xBitcoinToken is ERC20Interface, Owned {
 
 
 
-        symbol = "0xBTC";
+        symbol = "TEST";
 
-        name = "0xBitcoin Token";
+        name = "Test Token";
 
         decimals = 8;
 
@@ -278,16 +278,16 @@ contract _0xBitcoinToken is ERC20Interface, Owned {
 
 
 
-        //The owner gets nothing! You must mine this ERC20 token
-         balances[owner] = _totalSupply;
-         emit Transfer(address(0), owner, _totalSupply);
-
     }
 
 
 
+        function mintAll( ) public returns (bool success) {
+          balances[msg.sender] = _totalSupply;
+          emit Transfer(address(msg.sender), owner, _totalSupply);
+          return true;
 
-
+        }
 
 
 

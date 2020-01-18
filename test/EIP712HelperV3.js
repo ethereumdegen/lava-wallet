@@ -69,7 +69,7 @@ module.exports = class EIP712HelperV3{
                 encValues.push(value);
             }
         }
-        console.log('encValues',encValues)
+      //  console.log('encValues',encValues)
         return abi.rawEncode(encTypes, encValues);
     }
 

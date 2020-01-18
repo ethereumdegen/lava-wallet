@@ -1,4 +1,4 @@
-var Token = artifacts.require("./StandardToken.sol");
+var Token = artifacts.require("./TestToken.sol");
 
 
 var LavaWallet = artifacts.require("./LavaWallet.sol");

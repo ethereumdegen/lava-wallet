@@ -320,6 +320,7 @@ contract LavaWallet is ECRecovery{
 
 
        //transferRelayerReward into this contract (should be approved to it) and then to the relayer!
+       //this is reverting 
        require(transferTokensFrom(from, address(this), token, relayerRewardTokens));
        require(transferTokens(msg.sender, token, relayerRewardTokens));
 
@@ -398,8 +399,8 @@ contract LavaWallet is ECRecovery{
 
      require(_absorbTokensWithSignature(methodName,relayAuthority,from,to,wallet,tokens,relayerRewardTokens,expires,nonce,sigHash,signature));
 
-     //it can be requested that fewer tokens be sent that were approved -- the whole approval will be invalidated though
-     require(transferTokens(  to, token,  tokens));
+        //this is failing?
+    ///   require(transferTokens(  to, token,  tokens));
 
 
      return true;
