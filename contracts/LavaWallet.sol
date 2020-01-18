@@ -244,7 +244,7 @@ contract LavaWallet is ECRecovery{
 
 
   //do not allow ether to enter
-  function() public payable {
+  function() external payable {
       revert();
   }
 
@@ -269,14 +269,14 @@ contract LavaWallet is ECRecovery{
       }*/
 
 
-      function getLavaTypedDataHash(string memory methodName, address relayAuthority,address from,address to, address wallet,uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce) public view returns (bytes32) {
+      function getLavaTypedDataHash(string memory methodName, address relayAuthority,address from,address to, address wallet,address token,uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce) public view returns (bytes32) {
 
 
               // Note: we need to use `encodePacked` here instead of `encode`.
               bytes32 digest = keccak256(abi.encodePacked(
                   "\x19\x01",
                   getEIP712DomainHash('Lava Wallet','1',1,address(this)),
-                  getLavaPacketHash(methodName,relayAuthority,from,to,wallet,tokens,relayerRewardTokens,expires,nonce)
+                  getLavaPacketHash(methodName,relayAuthority,from,to,wallet,token,tokens,relayerRewardTokens,expires,nonce)
               ));
               return digest;
           }
@@ -298,7 +298,7 @@ contract LavaWallet is ECRecovery{
         If the authority address is a contract, allow its defined 'getAuthority()' delegate to relay
        */
 
-       require( relayAuthority == 0x0
+       require( relayAuthority == address(0x0)
          || (!addressContainsContract(relayAuthority) && msg.sender == relayAuthority)
          || (addressContainsContract(relayAuthority) && msg.sender == RelayAuthorityInterface(relayAuthority).getRelayAuthority())  );
 
@@ -365,50 +365,50 @@ contract LavaWallet is ECRecovery{
 
     */
 
-    function approveAndCallWithSignature( string memory methodName, address relayAuthority,address from,address to, address wallet,uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce, bytes memory signature ) public returns (bool success)   {
+    function approveAndCallWithSignature( string memory methodName, address relayAuthority,address from,address to, address wallet, address token, uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce, bytes memory signature ) public returns (bool success)   {
 
        require(!bytesEqual('transfer',bytes(methodName)));
 
         //check to make sure that signature == ecrecover signature
-       bytes32 sigHash = getLavaTypedDataHash(methodName,relayAuthority,from,to,wallet,tokens,relayerRewardTokens,expires,nonce);
+       bytes32 sigHash = getLavaTypedDataHash(methodName,relayAuthority,from,to,wallet,token,tokens,relayerRewardTokens,expires,nonce);
 
        require(_absorbTokensWithSignature(methodName,relayAuthority,from,to,wallet,tokens,relayerRewardTokens,expires,nonce,sigHash,signature));
 
-       _sendApproveAndCall(from,to,tokens,bytes(methodName));
+       _sendApproveAndCall(from,to,token, tokens,bytes(methodName));
 
         return true;
     }
 
-    function _sendApproveAndCall(address from, address to, uint tokens, bytes memory methodName) internal
+    function _sendApproveAndCall(address from, address to, address token, uint tokens, bytes memory methodName) internal
     {
-        ApproveAndCallFallBack(to).receiveApproval(from, tokens, address(this), bytes(methodName));
+        ApproveAndCallFallBack(to).receiveApproval(from, tokens, token, bytes(methodName));
     }
 
 
 
-   function transferTokensWithSignature(string memory methodName, address relayAuthority,address from,address to, address wallet,uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce, bytes memory signature) public returns (bool success)
+   function transferTokensWithSignature(string memory methodName, address relayAuthority,address from,address to, address wallet,address token, uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce, bytes memory signature) public returns (bool success)
  {
 
      require(bytesEqual('transfer',bytes(methodName)));
 
      //check to make sure that signature == ecrecover signature
-     bytes32 sigHash = getLavaTypedDataHash(methodName,relayAuthority,from,to,wallet,tokens,relayerRewardTokens,expires,nonce);
+     bytes32 sigHash = getLavaTypedDataHash(methodName,relayAuthority,from,to,wallet,token, tokens,relayerRewardTokens,expires,nonce);
 
      require(_absorbTokensWithSignature(methodName,relayAuthority,from,to,wallet,tokens,relayerRewardTokens,expires,nonce,sigHash,signature));
 
      //it can be requested that fewer tokens be sent that were approved -- the whole approval will be invalidated though
-     require(transferTokens(  to,  tokens));
+     require(transferTokens(  to, token,  tokens));
 
 
      return true;
 
  }
 
- function burnSignature( string memory methodName, address relayAuthority,address from,address to, address wallet,uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce,  bytes memory signature) public returns (bool success)
+ function burnSignature( string memory methodName, address relayAuthority,address from,address to, address wallet,address token,uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce,  bytes memory signature) public returns (bool success)
       {
 
 
-         bytes32 sigHash = getLavaTypedDataHash(methodName,relayAuthority,from,to,wallet,tokens,relayerRewardTokens,expires,nonce);
+         bytes32 sigHash = getLavaTypedDataHash(methodName,relayAuthority,from,to,wallet,token, tokens,relayerRewardTokens,expires,nonce);
 
           address recoveredSignatureSigner = recover(sigHash,signature);
 
