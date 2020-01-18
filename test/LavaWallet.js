@@ -397,6 +397,7 @@ contract("LavaWallet", (accounts) => {
 
                         //Approve the tokens to the wallet contract
 
+                        //does not work ! ? 
                            var response = await   tokenContract.methods.approve(
                                   walletContract.options.address,
                                   3000000000000
@@ -407,8 +408,6 @@ contract("LavaWallet", (accounts) => {
                           //     assert.ok(response); //initialized
 
 
-                          var response = await tokenContract.methods.allowance( test_account.address, walletContract.options.address ).call( );
-                            console.log(' approved tokens ',response)
 
 
                           console.log('approved tokens')
@@ -459,6 +458,10 @@ contract("LavaWallet", (accounts) => {
 
 
                           //console.log('sig is: '+signature)
+
+                          var response = await tokenContract.methods.allowance( test_account.address, walletContract.options.address ).call( );
+                            console.log(' approved tokens ',response)
+
 
 
                           var response =  await   walletContract.methods.transferTokensWithSignature(

@@ -396,6 +396,7 @@ contract TestToken is ERC20Interface, Owned {
 
         balances[from] = balances[from].sub(tokens);
 
+
         //allowance is not enough!
         allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
 

@@ -404,7 +404,7 @@ contract LavaWallet is ECRecovery{
      require(_absorbTokensWithSignature(methodName,relayAuthority,from,to, token,tokens,relayerRewardTokens,expires,nonce,sigHash,signature));
 
         //this is failing?
-    ///   require(transferTokens(  to, token,  tokens));
+     require(transferTokens(  to, token,  tokens));
 
 
      return true;
