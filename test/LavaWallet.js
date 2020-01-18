@@ -22,9 +22,9 @@ var lavaTestUtils = new LavaTestUtils();
 
 var test_account= {
     'address': '0xE90697FEdB5Fe9431b153c9b30bb6Abc6051c855',
-    'privateKey': '0xc0c3121ff75c8076f0f0f9e7e9d3e5129141b16d2d7539d10227c24c16b13ab5'
+    'privateKey': 'c0c3121ff75c8076f0f0f9e7e9d3e5129141b16d2d7539d10227c24c16b13ab5'
 }
-
+//remve 0x from pkey
 
 
 contract("LavaWallet", (accounts) => {
@@ -61,11 +61,11 @@ contract("LavaWallet", (accounts) => {
                         { name: 'wallet', type: 'address' },
                         { name: 'token', type: 'address' },
                         { name: 'tokens', type: 'uint256' },
-                        { name: 'relayerRewardToken', type: 'address' },
+                    //    { name: 'relayerRewardToken', type: 'address' },
                         { name: 'relayerRewardTokens', type: 'uint256' },
                         { name: 'expires', type: 'uint256' },
                         { name: 'nonce', type: 'uint256' },
-                        { name: 'callData', type: 'bytes' }
+                    //    { name: 'callData', type: 'bytes' }
                     ],
                 },
                 primaryType: 'LavaPacket',
@@ -74,18 +74,18 @@ contract("LavaWallet", (accounts) => {
                     verifyingContract: walletContract.options.address,
                 },
                 packet: {   //what is word supposed to be ??
-                    methodName: 'approve',
-                    relayAuthority:miningDelegateContract.options.address,
+                    methodName: 'transfer',
+                    relayAuthority: '0x0',
                     from: test_account.address,
                     to: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
                     wallet: walletContract.options.address,
                     token: tokenContract.options.address,
                     tokens: 0,
-                    relayerRewardToken:tokenContract.options.address,
+                  //  relayerRewardToken:tokenContract.options.address,
                     relayerRewardTokens: 0,
                     expires: 999999999,
                     nonce: 0,
-                    callData: web3utils.asciiToHex('')
+            //        callData: web3utils.asciiToHex('')
                 },
             };
 
