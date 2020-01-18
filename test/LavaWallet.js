@@ -399,7 +399,7 @@ contract("LavaWallet", (accounts) => {
 
                            var response = await   tokenContract.methods.approve(
                                   walletContract.options.address,
-                                  300000000
+                                  3000000000000
                                   ).send( {from: test_account.address} )
 
                                //this is reverting !
@@ -413,6 +413,9 @@ contract("LavaWallet", (accounts) => {
 
                           console.log('approved tokens')
 
+
+                           console.log('wallet address is '+walletContract.options.address)
+                           console.log('token address is '+tokenContract.options.address)
 
                             console.log('test acct address is '+test_account.address)
 

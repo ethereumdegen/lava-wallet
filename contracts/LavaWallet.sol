@@ -320,13 +320,13 @@ contract LavaWallet is ECRecovery{
 
 
        //transferRelayerReward into this contract (should be approved to it) and then to the relayer!
-       //this is reverting if amounts are nonzero
+       //this is reverting if amounts are nonzero (approval?)
       require(transferTokensFrom(from, address(this), token, relayerRewardTokens));
-      require(transferTokens(msg.sender, token, relayerRewardTokens));
+      //require(transferTokens(msg.sender, token, relayerRewardTokens));
 
 
        //transfer tokens into this contract to stage them for sending out
-      require(transferTokensFrom(from, address(this), token, tokens));
+    //  require(transferTokensFrom(from, address(this), token, tokens));
 
 
        return true;
