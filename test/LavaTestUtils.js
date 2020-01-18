@@ -2,7 +2,7 @@
 var web3utils = require('web3-utils')
 const ethUtil = require('ethereumjs-util')
 var ethSigUtil = require('eth-sig-util')
-var EIP712Helper = require("./EIP712Helper");
+var EIP712HelperV3 = require("./EIP712HelperV3");
 
 
 /*
@@ -75,19 +75,19 @@ function typedSignatureHash(typedData) {
 
 
 
- getLavaPacketSchemaHash()
+ static getLavaPacketSchemaHash()
  {
     var hardcodedSchemaHash = '0x8fd4f9177556bbc74d0710c8bdda543afd18cc84d92d64b5620d5f1881dceb37' ;
     return hardcodedSchemaHash;
  }
 
- getLavaTypedDataHash(typedData,types)
+ static getLavaTypedDataHash(typedData,types)
  {
    var typedDataHash = ethUtil.sha3(
        Buffer.concat([
            Buffer.from('1901', 'hex'),
   //         EIP712Helper.structHash('EIP712Domain', typedData.domain, types),
-           EIP712Helper.structHash(typedData.primaryType, typedData.message, types),
+           EIP712HelperV3.structHash(typedData.primaryType, typedData.message, types),
        ]),
    );
 
@@ -226,35 +226,24 @@ function typedSignatureHash(typedData) {
 
      }
 
-     static lavaPacketHasValidSignature(packetData){
+     static lavaPacketHasValidSignature(   typedData, signature, signersPublicAddress){
 
-       var sigHash = LavaPacketUtils.getLavaTypedDataHash(
-          packetData.methodName,
-          packetData.relayAuthority,
-          packetData.from,
-          packetData.to,
-          packetData.wallet,
-          packetData.token,
-          packetData.tokens,
-      //    packetData.relayerRewardToken,
-          acketData.relayerRewardTokens,
-          packetData.expires,
-          packetData.nonce);
+       var sigHash = LavaTestUtils.getLavaTypedDataHash( typedData, typedData.types);
+       var msgBuf = ethUtil.toBuffer(signature)
+       const res = ethUtil.fromRpcSig(msgBuf);
 
 
-       var msgBuf = ethjsutil.toBuffer(packetData.signature)
-       const res = ethjsutil.fromRpcSig(msgBuf);
+       var hashBuf = ethUtil.toBuffer(sigHash)
 
+       const pubKey  = ethUtil.ecrecover(hashBuf, res.v, res.r, res.s);
+       const addrBuf = ethUtil.pubToAddress(pubKey);
+       const recoveredSignatureSigner    = ethUtil.bufferToHex(addrBuf);
 
-       var hashBuf = ethjsutil.toBuffer(sigHash)
+       var message = typedData.message
 
-       const pubKey  = ethjsutil.ecrecover(hashBuf, res.v, res.r, res.s);
-       const addrBuf = ethjsutil.pubToAddress(pubKey);
-       const recoveredSignatureSigner    = ethjsutil.bufferToHex(addrBuf);
-
-
+       console.log('recovered signer pub address',recoveredSignatureSigner.toLowerCase())
        //make sure the signer is the depositor of the tokens
-       return packetData.from.toLowerCase() == recoveredSignatureSigner.toLowerCase();
+       return signersPublicAddress == recoveredSignatureSigner.toLowerCase();
 
      }
 

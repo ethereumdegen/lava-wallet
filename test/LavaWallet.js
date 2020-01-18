@@ -300,7 +300,7 @@ contract("LavaWallet", (accounts) => {
                            var response = await new Promise((resolve, reject) => {
                                 tokenContract.methods.approve(
                                   walletContract.options.address,
-                                  1000
+                                  3000000
 
                                ).send( {} , function(response){
                                  resolve(response)
@@ -318,14 +318,16 @@ contract("LavaWallet", (accounts) => {
                           console.log('approved tokens')
 
 
+                            console.log('test acct address is '+test_account.address)
+
                           //do the meta tx
                           var privateKey = test_account.privateKey;
                           var privKey = Buffer.from(privateKey, 'hex')
 
 
-                          console.log('typed data:', typedData)
+                          //console.log('typed data:', typedData)
 
-                          const typedDataHash = lavaTestUtils.getLavaTypedDataHash(typedData, typedData.types);
+                          const typedDataHash = LavaTestUtils.getLavaTypedDataHash(typedData, typedData.types);
 
                           const sig = ethUtil.ecsign(typedDataHash , privKey );
                       //    console.log('sig is '+ JSON.stringify(sig))
@@ -336,9 +338,14 @@ contract("LavaWallet", (accounts) => {
                             var signature = ethUtil.toRpcSig(27, sig.r, sig.s);
 
 
-                            assert.ok(signature )
+                            var isValid = LavaTestUtils.lavaPacketHasValidSignature(
+                                    typedData,
+                                     signature,
+                                   test_account.address)
 
-                          console.log('sig is: '+signature)
+                            assert.ok( isValid )
+
+                          //console.log('sig is: '+signature)
 
 
                           var response = await new Promise((resolve, reject) => {
@@ -426,7 +433,7 @@ contract("LavaWallet", (accounts) => {
                     const types = typedData.types;
 
 
-                const typedDataHash = lavaTestUtils.getLavaTypedDataHash(typedData,types);
+                const typedDataHash = LavaTestUtils.getLavaTypedDataHash(typedData,types);
 
 
                   //https://github.com/ethers-io/ethers.js/issues/46/
