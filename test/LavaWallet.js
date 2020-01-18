@@ -205,6 +205,107 @@ contract("LavaWallet", (accounts) => {
 
 
 
+                        it(" does transfer  ", async function () {
+
+                      //    var domainTypehash = await walletContract.methods.getDomainTypehash().call()
+                          var lavaPacketTypehash = await walletContract.methods.getLavaPacketTypehash().call()
+
+
+
+
+                          var methodName =  'transfer'    //convert to bytes
+                          var relayAuthority = '0x357FfaDBdBEe756aA686Ef6843DA359E2a85229c'
+                          var from= test_account.address
+                          var to= "0x357FfaDBdBEe756aA686Ef6843DA359E2a85229c"
+                          var walletAddress=walletContract.options.address
+                          var tokenAddress=tokenContract.options.address
+                          var tokenAmount=2000000
+                        //  var relayerRewardToken=tokenContract.options.address
+                          var relayerRewardTokens=1000000
+                          var expires=336504400
+                          var nonce='0xc18f687c56f1b2749af7d6151fa351'
+
+                          //var expectedSignature="0x4c09b1df6d348b462da89e6b833aa18efec11bc7064eff6d6876582232571873"
+
+                           //add new code here !!
+
+                          var typedData = lavaTestUtils.getLavaTypedDataFromParams(
+                            methodName,
+                            relayAuthority,
+                            from,
+                            to,
+                            walletAddress,
+                            tokenAddress,
+                            tokenAmount,
+                          //  relayerRewardToken,
+                            relayerRewardTokens,
+                            expires,
+                            nonce);
+
+
+                      //    var domainStructHash =  EIP712Helper.typeHash('EIP712Domain', typedData.types);
+                          var lavaPacketStructHash =  EIP712Helper.typeHash('LavaPacket', typedData.types);
+
+                    //      assert.equal(LavaTestUtils.bufferToHex(domainStructHash), domainTypehash    ); //initialized
+
+                           assert.equal(LavaTestUtils.bufferToHex(lavaPacketStructHash), lavaPacketTypehash  ); //initialized
+
+
+
+                           var lavaPacketTuple = [methodName,
+                                                   relayAuthority,
+                                                   from,
+                                                   to,
+                                                   walletAddress,
+                                                   tokenAddress,
+                                                   tokenAmount,
+                                                   relayerRewardTokens,
+                                                   expires,
+                                                   nonce]
+
+                            console.log('lavaPacketTypehash ', lavaPacketTypehash)
+
+
+                          console.log('lava packet tuple ', lavaPacketTuple)
+
+
+                      //     var domainHash = await walletContract.methods.getDomainHash(["Lava Wallet",walletContract.options.address]).call()
+                           var lavaPacketHash = await walletContract.methods.getLavaPacketHash(methodName,
+                                                                                   relayAuthority,
+                                                                                   from,
+                                                                                   to,
+                                                                                   walletAddress,
+                                                                                   tokenAddress,
+                                                                                   tokenAmount,
+                                                                                   relayerRewardTokens,
+                                                                                   expires,
+                                                                                   nonce).call()
+
+
+
+                       //assert.equal(domainHash, LavaTestUtils.bufferToHex( EIP712Helper.structHash('EIP712Domain', typedData.domain, typedData.types) )    );
+
+
+                       //why is this failing on the values !?
+                       assert.equal(lavaPacketHash, LavaTestUtils.bufferToHex( EIP712Helper.structHash('LavaPacket', typedData.packet, typedData.types) )     );
+
+
+
+                          var approved  = await tokenContract.methods.approve( walletContract.address, 1000    ).call({from: test_account.address}, function(err,data){
+                           console.log('meep',data);
+                           });
+
+
+
+
+                          console.log('approved tokens')
+
+
+                        });
+
+
+
+
 
             it("can approveTokensWithSignature ", async function () {
 
@@ -229,8 +330,8 @@ contract("LavaWallet", (accounts) => {
                  var privateKey = test_account.privateKey;
 
 
-                 var methodName =   'approve'    //convert to bytes
-                 var relayAuthority = miningDelegateContract.options.address
+                 var methodName =   'transfer'    //convert to bytes
+                 var relayAuthority = '0x357FfaDBdBEe756aA686Ef6843DA359E2a85229c'
                  var from= addressFrom
                  var to= "0x357FfaDBdBEe756aA686Ef6843DA359E2a85229c"
                  var walletAddress=walletContract.options.address
@@ -245,17 +346,16 @@ contract("LavaWallet", (accounts) => {
                   //add new code here !!
 
                  var typedData = lavaTestUtils.getLavaTypedDataFromParams(
-                   methodName,
-                   relayAuthority,
-                   from,
-                   to,
-                   walletAddress,
-                   tokenAddress,
-                   tokenAmount,
-                   relayerRewardToken,
-                   relayerRewardTokens,
-                   expires,
-                   nonce);
+                                 methodName,
+                                 relayAuthority,
+                                 from,
+                                 to,
+                                 walletAddress,
+                                 tokenAddress,
+                                 tokenAmount,
+                                 relayerRewardTokens,
+                                 expires,
+                                 nonce);
 
 
                     const types = typedData.types;
@@ -277,7 +377,6 @@ contract("LavaWallet", (accounts) => {
                   walletAddress,
                   tokenAddress,
                   tokenAmount,
-                  relayerRewardToken,
                   relayerRewardTokens,
                   expires,
                   nonce];
@@ -287,7 +386,16 @@ contract("LavaWallet", (accounts) => {
 
 
                 ///msg hash signed is 0x9201073a01df85b87dab83ad2498bf5b2190bf62cb03b2a407ba7d77279a4ceb
-                var lavaMsgHash = await walletContract.methods.getLavaTypedDataHash(  tuple ).call({from: test_account.address})
+                var lavaMsgHash = await walletContract.methods.getLavaTypedDataHash(  methodName,
+                                                                            relayAuthority,
+                                                                            from,
+                                                                            to,
+                                                                            walletAddress,
+                                                                            tokenAddress,
+                                                                            tokenAmount,
+                                                                            relayerRewardTokens,
+                                                                            expires,
+                                                                            nonce ).call({from: test_account.address})
                 console.log('lavaMsgHash',lavaMsgHash)
                 console.log('typedDataHash.toString()',typedDataHash.toString('hex'))
 
@@ -314,18 +422,18 @@ contract("LavaWallet", (accounts) => {
 
                 var fullPacket = LavaTestUtils.getLavaPacket(
                   methodName,
-                relayAuthority,
-                from,
-                to,
-                walletAddress,
-                tokenAddress,
-                tokenAmount,
-                relayerRewardToken,
-                relayerRewardTokens,
-                expires,
-                nonce,
-                signatureData
-              )
+                    relayAuthority,
+                    from,
+                    to,
+                    walletAddress,
+                    tokenAddress,
+                    tokenAmount,
+                //    relayerRewardToken,
+                    relayerRewardTokens,
+                    expires,
+                    nonce,
+                    signatureData
+                  )
 
                 assert.equal(  LavaTestUtils.lavaPacketHasValidSignature( fallPacket ) , true   )
 
@@ -448,7 +556,16 @@ contract("LavaWallet", (accounts) => {
 
 
                       ///msg hash signed is 0x9201073a01df85b87dab83ad2498bf5b2190bf62cb03b2a407ba7d77279a4ceb
-                      var lavaMsgHash = await walletContract.methods.getLavaTypedDataHash('approve', tuple ).send()
+                      var lavaMsgHash = await walletContract.methods.getLavaTypedDataHash( methodname,
+                                                                                      requiresKing,
+                                                                                      from,
+                                                                                      to,
+                                                                                      walletAddress,
+                                                                                      tokenAddress,
+                                                                                      tokenAmount,
+                                                                                      relayerReward,
+                                                                                      expires,
+                                                                                      nonce ).send()
                       console.log('lavaMsgHash',lavaMsgHash)
 
                       assert.equal(lavaMsgHash, msgHash ); //initialized
