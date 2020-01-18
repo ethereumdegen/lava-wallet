@@ -209,7 +209,7 @@ contract LavaWallet is ECRecovery{
 
 
   bytes32 constant LAVAPACKET_TYPEHASH = keccak256(
-      "LavaPacket(string methodName,address relayAuthority,address from,address to,address wallet,address token,uint256 tokens, uint256 relayerRewardTokens,uint256 expires,uint256 nonce)"
+      "LavaPacket(string methodName,address relayAuthority,address from,address to,address wallet,address token,uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce)"
   );
 
 

@@ -94,7 +94,7 @@ function typedSignatureHash(typedData) {
    return typedDataHash;
  }
 
- getLavaTypedDataFromParams(methodName,relayAuthority,from,to,walletAddress,tokenAddress,tokenAmount,relayerRewardToken,relayerRewardTokens,expires,nonce )
+ getLavaTypedDataFromParams(methodName,relayAuthority,from,to,walletAddress,tokenAddress,tokenAmount,relayerRewardTokens,expires,nonce )
  {
    const typedData = {
            types: {
@@ -107,7 +107,7 @@ function typedSignatureHash(typedData) {
                    { name: 'wallet', type: 'address' },
                    { name: 'token', type: 'address' },
                    { name: 'tokens', type: 'uint256' },
-                   { name: 'relayerRewardToken', type: 'address' },
+              //     { name: 'relayerRewardToken', type: 'address' },
                    { name: 'relayerRewardTokens', type: 'uint256' },
                    { name: 'expires', type: 'uint256' },
                    { name: 'nonce', type: 'uint256' }
@@ -126,7 +126,7 @@ function typedSignatureHash(typedData) {
                wallet: walletAddress,
                token: tokenAddress,
                tokens: tokenAmount,
-               relayerRewardToken: relayerRewardToken,
+            //   relayerRewardToken: relayerRewardToken,
                relayerRewardTokens: relayerRewardTokens,
                expires: expires,
                nonce: nonce
@@ -148,10 +148,9 @@ function typedSignatureHash(typedData) {
 
 
 
-
      static getLavaPacket(
        methodName,relayAuthority,from,to,wallet,token,tokens,
-       relayerRewardToken,relayerRewardTokens,expires,nonce,signature)
+       relayerRewardTokens,expires,nonce,signature)
      {
 
        return {
@@ -162,7 +161,7 @@ function typedSignatureHash(typedData) {
          wallet:wallet,
          token:token,
          tokens:tokens,
-         relayerRewardToken:relayerRewardToken,
+      //   relayerRewardToken:relayerRewardToken,
          relayerRewardTokens:relayerRewardTokens,
          expires:expires,
          nonce:nonce,
@@ -174,14 +173,15 @@ function typedSignatureHash(typedData) {
 
      static lavaPacketHasValidSignature(packetData){
 
-       var sigHash = LavaPacketUtils.getLavaTypedDataHash(packetData.methodName,
+       var sigHash = LavaPacketUtils.getLavaTypedDataHash(
+          packetData.methodName,
           packetData.relayAuthority,
           packetData.from,
           packetData.to,
           packetData.wallet,
           packetData.token,
           packetData.tokens,
-          packetData.relayerRewardToken,
+      //    packetData.relayerRewardToken,
           acketData.relayerRewardTokens,
           packetData.expires,
           packetData.nonce);

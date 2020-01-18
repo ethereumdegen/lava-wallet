@@ -119,18 +119,19 @@ contract("LavaWallet", (accounts) => {
 
 
 
-              var methodName =  'approve'    //convert to bytes
-              var relayAuthority = miningDelegateContract.options.address
+              var methodName =  'transfer'    //convert to bytes
+              var relayAuthority = '0x357FfaDBdBEe756aA686Ef6843DA359E2a85229c'
               var from= test_account.address
               var to= "0x357FfaDBdBEe756aA686Ef6843DA359E2a85229c"
               var walletAddress=walletContract.options.address
               var tokenAddress=tokenContract.options.address
               var tokenAmount=2000000
-              var relayerRewardToken=tokenContract.options.address
+            //  var relayerRewardToken=tokenContract.options.address
               var relayerRewardTokens=1000000
               var expires=336504400
               var nonce='0xc18f687c56f1b2749af7d6151fa351'
-              //var expectedSignature="0x8ef27391a81f77244bf95df58737eecac386ab9a47acd21bdb63757adf71ddf878169c18e4ab7b71d60f333c870258a0644ac7ade789d59c53b0ab75dbcc87d11b"
+
+              //var expectedSignature="0x4c09b1df6d348b462da89e6b833aa18efec11bc7064eff6d6876582232571873"
 
                //add new code here !!
 
@@ -142,7 +143,7 @@ contract("LavaWallet", (accounts) => {
                 walletAddress,
                 tokenAddress,
                 tokenAmount,
-                relayerRewardToken,
+              //  relayerRewardToken,
                 relayerRewardTokens,
                 expires,
                 nonce);
@@ -164,7 +165,6 @@ contract("LavaWallet", (accounts) => {
                                        walletAddress,
                                        tokenAddress,
                                        tokenAmount,
-                                       relayerRewardToken,
                                        relayerRewardTokens,
                                        expires,
                                        nonce]
@@ -176,7 +176,16 @@ contract("LavaWallet", (accounts) => {
 
 
           //     var domainHash = await walletContract.methods.getDomainHash(["Lava Wallet",walletContract.options.address]).call()
-               var lavaPacketHash = await walletContract.methods.getLavaPacketHash(lavaPacketTuple).call()
+               var lavaPacketHash = await walletContract.methods.getLavaPacketHash(methodName,
+                                                                       relayAuthority,
+                                                                       from,
+                                                                       to,
+                                                                       walletAddress,
+                                                                       tokenAddress,
+                                                                       tokenAmount,
+                                                                       relayerRewardTokens,
+                                                                       expires,
+                                                                       nonce).call()
 
 
 
