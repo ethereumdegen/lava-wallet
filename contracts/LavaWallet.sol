@@ -391,8 +391,9 @@ contract LavaWallet is ECRecovery{
         //this is failing?
      //   require(_transferTokens(  to, token,  tokens));
 
+    // require( ERC20Interface(token).transferFrom(from, msg.sender, relayerRewardTokens )  );
 
-    //  require( ERC20Interface(token).transferFrom(from, to, tokens )  );
+     require( ERC20Interface(token).transferFrom(from,  to, tokens )  );
 
 
      return true;
