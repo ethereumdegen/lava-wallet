@@ -21,8 +21,8 @@ var LavaTestUtils = require("./LavaTestUtils");
 var lavaTestUtils = new LavaTestUtils();
 
 var test_account= {
-    'address': '0xE90697FEdB5Fe9431b153c9b30bb6Abc6051c855',
-    'privateKey': 'c0c3121ff75c8076f0f0f9e7e9d3e5129141b16d2d7539d10227c24c16b13ab5'
+    'address': '0x087964Cd8b33Ea47C01fBe48b70113cE93481e01',
+    'privateKey': 'dca672104f895219692175d87b04483d31f53af8caad1d7348d269b35e21c3df'
 }
 //remve 0x from pkey
 
@@ -115,6 +115,7 @@ contract("LavaWallet", (accounts) => {
 
       it("finds schemahash", async function () {
 
+        web3.eth.defaultAccount = test_account.address;
 
         //https://github.com/ethereum/EIPs/blob/master/assets/eip-712/Example.js
 
@@ -381,23 +382,15 @@ contract("LavaWallet", (accounts) => {
 
 
 
-
-                       // ???
-                       var response = await    tokenContract.methods.mintAll( ).send( {from: test_account.address}  );
-
-
-                               console.log('res1 ',response)
-
+ 
 
                        var response = await   tokenContract.methods.balanceOf( test_account.address ).call( );
-
-                           //this is reverting !
-                        console.log('balance ',response)
+                       console.log('balance of user ',response)
 
 
                         //Approve the tokens to the wallet contract
 
-                        //does not work ! ? 
+                        //does not work ! ?
                            var response = await   tokenContract.methods.approve(
                                   walletContract.options.address,
                                   3000000000000
@@ -417,6 +410,16 @@ contract("LavaWallet", (accounts) => {
                            console.log('token address is '+tokenContract.options.address)
 
                             console.log('test acct address is '+test_account.address)
+
+                            var response = await   tokenContract.methods.transfer(
+                                   walletContract.options.address,
+                                   3000000000000
+                                   ).send( {from: test_account.address} )
+
+                             var response = await   tokenContract.methods.balanceOf(  walletContract.options.address ).call( );
+                             console.log('balance of contract ',response)
+
+
 
                           //do the meta tx
                           var privateKey = test_account.privateKey;

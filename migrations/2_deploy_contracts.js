@@ -5,14 +5,18 @@ var LavaWallet = artifacts.require("./LavaWallet.sol");
 
 module.exports = function(deployer) {
 
-  deployer.deploy(Token);
+
+  return deployer.deploy(Token).then(function(){
+    console.log('deploy 1 ')
 
 
-  //  deployer.deploy(LavaWallet);
 
-    return deployer.deploy(LavaWallet).then(function(){
-        console.log('deploy 3 ',  LavaWallet.address)
-         return LavaWallet.deployed()
+            return deployer.deploy(LavaWallet).then(function(){
+                console.log('deploy 3 ',  LavaWallet.address)
+                 return LavaWallet.deployed()
+          });
+
+
   });
 
 

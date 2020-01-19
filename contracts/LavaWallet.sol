@@ -143,10 +143,8 @@ contract LavaWallet is ECRecovery{
    mapping(bytes32 => uint256) burnedSignatures;
 
 
-  event Deposit(address token, address user, uint amount, uint balance);
-  event Withdraw(address token, address user, uint amount, uint balance);
-  event Transfer(address indexed from, address indexed to,address token, uint tokens);
-  event Approval(address indexed tokenOwner, address indexed spender,address token, uint tokens);
+  //event Transfer(address indexed from, address indexed to,address token, uint tokens);
+  //event Approval(address indexed tokenOwner, address indexed spender,address token, uint tokens);
 
 
 
@@ -250,32 +248,14 @@ contract LavaWallet is ECRecovery{
 
 
 
-
-
-  // function getLavaPacket(address from,)
-
-   //This replaces getLavaTypedDataHash .. how to handle methodName?
-
-  /* function getLavaTypedDataHash(LavaPacket packet) public  view returns (bytes32) {
-
-
-          // Note: we need to use `encodePacked` here instead of `encode`.
-          bytes32 digest = keccak256(abi.encodePacked(
-              "\x19\x01",
-            //  DOMAIN_SEPARATOR,
-              getLavaPacketHash(packet)
-          ));
-          return digest;
-      }*/
-
-
+    // Make sure the change the chainID here if deploying to a testnet
       function getLavaTypedDataHash(string memory methodName, address relayAuthority,address from,address to, address wallet,address token,uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce) public view returns (bytes32) {
 
 
               // Note: we need to use `encodePacked` here instead of `encode`.
               bytes32 digest = keccak256(abi.encodePacked(
                   "\x19\x01",
-                  getEIP712DomainHash('Lava Wallet','1',1,address(this)),
+                  getEIP712DomainHash('Lava Wallet','1',5,address(this)),
                   getLavaPacketHash(methodName,relayAuthority,from,to,wallet,token,tokens,relayerRewardTokens,expires,nonce)
               ));
               return digest;
@@ -312,7 +292,7 @@ contract LavaWallet is ECRecovery{
 
 
        //make sure the signature has not expired
-       require(block.number < expires);
+       require(block.number < expires || expires == 0);
 
        uint burnedSignature = burnedSignatures[sigHash];
        burnedSignatures[sigHash] = 0x1; //spent
@@ -321,19 +301,19 @@ contract LavaWallet is ECRecovery{
 
        //transferRelayerReward into this contract (should be approved to it) and then to the relayer!
        //this is reverting if amounts are nonzero (approval?)
-      require(transferTokensFrom(from, address(this), token, relayerRewardTokens));
-      //require(transferTokens(msg.sender, token, relayerRewardTokens));
+      require(_transferTokensFrom(from, address(this), token, relayerRewardTokens));
+      require(_transferTokens(msg.sender, token, relayerRewardTokens));
 
 
        //transfer tokens into this contract to stage them for sending out
-    //  require(transferTokensFrom(from, address(this), token, tokens));
+      require(_transferTokensFrom(from, address(this), token, tokens));
 
 
        return true;
    }
 
    //why wont this work w approve ??
-   function transferTokens(address to, address token, uint tokens) public returns (bool success) {
+   function _transferTokens(address to, address token, uint tokens) internal returns (bool success) {
          ERC20Interface(token).transfer(to, tokens );
 
          return true;
@@ -342,7 +322,7 @@ contract LavaWallet is ECRecovery{
 
     ///transfer tokens within the lava balances
     //Requires approval
-   function transferTokensFrom( address from, address to,address token,  uint tokens) public returns (bool success) {
+   function _transferTokensFrom( address from, address to,address token,  uint tokens) internal returns (bool success) {
         ERC20Interface(token).transferFrom(from, to, tokens );  //??
 
        return true;
@@ -404,7 +384,7 @@ contract LavaWallet is ECRecovery{
      require(_absorbTokensWithSignature(methodName,relayAuthority,from,to, token,tokens,relayerRewardTokens,expires,nonce,sigHash,signature));
 
         //this is failing?
-     require(transferTokens(  to, token,  tokens));
+     require(_transferTokens(  to, token,  tokens));
 
 
      return true;
@@ -440,7 +420,19 @@ contract LavaWallet is ECRecovery{
        return (burnedSignatures[digest]);
      }
 
+     function signatureIsValid(string memory methodName, address relayAuthority,address from,address to, address wallet,address token, uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce, bytes memory signature) public view returns (bool success)
+   {
 
+        //check to make sure that signature == ecrecover signature
+       bytes32 sigHash = getLavaTypedDataHash(methodName,relayAuthority,from,to,wallet,token, tokens,relayerRewardTokens,expires,nonce);
+
+
+       address recoveredSignatureSigner = recover(sigHash,signature);
+
+
+       return  (from == recoveredSignatureSigner) ;
+
+   }
 
 
        /*

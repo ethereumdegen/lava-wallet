@@ -5,15 +5,15 @@ pragma solidity ^0.5.16;
 
 // ----------------------------------------------------------------------------
 
-// '0xBitcoin Token' contract
+// 'Test Token' contract
 
 // Mineable ERC20 Token using Proof Of Work
 
 //
 
-// Symbol      : 0xBTC
+// Symbol      : TEST
 
-// Name        : 0xBitcoin Token
+// Name        : Test Token
 
 // Total supply: 21,000,000.00
 
@@ -275,19 +275,13 @@ contract TestToken is ERC20Interface, Owned {
 
         _totalSupply = 21000000 * 10**uint(decimals);
 
+        balances[msg.sender] = _totalSupply;
 
+        emit Transfer(address(msg.sender), owner, _totalSupply);
 
 
     }
 
-
-
-        function mintAll( ) public returns (bool success) {
-          balances[msg.sender] = _totalSupply;
-          emit Transfer(address(msg.sender), owner, _totalSupply);
-          return true;
-
-        }
 
 
 
@@ -396,8 +390,6 @@ contract TestToken is ERC20Interface, Owned {
 
         balances[from] = balances[from].sub(tokens);
 
-
-        //allowance is not enough!
         allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
 
         balances[to] = balances[to].add(tokens);
