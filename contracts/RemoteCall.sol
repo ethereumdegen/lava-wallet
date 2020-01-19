@@ -48,8 +48,6 @@ contract RemoteCall{
      }
 
 
-
-
        /*
          Receive approval from ApproveAndCall() to execute arbitrary code.
 
@@ -60,7 +58,7 @@ contract RemoteCall{
              //------------- run any arbitrary code here
 
 
-       bytes memory b_address;
+  /*     bytes memory b_address;
        bytes32 b_amount;
 
 
@@ -75,7 +73,7 @@ contract RemoteCall{
         uint256 remoteAmount =   uint256(b_amount);
 
         require(   ERC20Interface(token).transferFrom( from , remoteContractAddress, remoteAmount)  ) ;
-
+*/
 
               //------------- end arbitrary code
 

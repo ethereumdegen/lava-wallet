@@ -300,9 +300,9 @@ contract LavaWallet is ECRecovery{
 
        require(_validatePacketSignature(methodName,relayAuthority,from,to, token,tokens,relayerRewardTokens,expires,nonce, signature));
 
-       bytes memory method = bytes(methodName);
+      bytes memory method = bytes(methodName);
 
-       _sendApproveAndCall(from,to,token,tokens,method);
+        _sendApproveAndCall(from,to,token,tokens,method);
 
         return true;
     }
