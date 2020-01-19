@@ -230,7 +230,7 @@ contract LavaWallet is ECRecovery{
               // Note: we need to use `encodePacked` here instead of `encode`.
               bytes32 digest = keccak256(abi.encodePacked(
                   "\x19\x01",
-                  getEIP712DomainHash('Lava Wallet','1',1,address(this)),
+                  getEIP712DomainHash('Lava Wallet','2',1,address(this)),
                   getLavaPacketHash(methodName,relayAuthority,from,to,wallet,token,tokens,relayerRewardTokens,expires,nonce)
               ));
               return digest;
