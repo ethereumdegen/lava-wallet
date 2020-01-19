@@ -1,7 +1,9 @@
+
 pragma solidity ^0.5.16;
 
 
 /*
+
 
 LAVAWALLET is a Meta Transaction Solution using EIP 712
 
@@ -228,7 +230,7 @@ contract LavaWallet is ECRecovery{
               // Note: we need to use `encodePacked` here instead of `encode`.
               bytes32 digest = keccak256(abi.encodePacked(
                   "\x19\x01",
-                  getEIP712DomainHash('Lava Wallet','1',5,address(this)),
+                  getEIP712DomainHash('Lava Wallet','1',1,address(this)),
                   getLavaPacketHash(methodName,relayAuthority,from,to,wallet,token,tokens,relayerRewardTokens,expires,nonce)
               ));
               return digest;
@@ -265,7 +267,7 @@ contract LavaWallet is ECRecovery{
          address recoveredSignatureSigner = recover(sigHash,signature);
 
 
-          //make sure the signer is the depositor of the tokens
+          //make sure the signer is the from field
           require(from == recoveredSignatureSigner);
 
 
@@ -285,24 +287,7 @@ contract LavaWallet is ECRecovery{
        return true;
    }
 
-   //why wont this work w approve ??
-   function _transferTokens(address to, address token, uint tokens) internal returns (bool success) {
-         ERC20Interface(token).transfer(to, tokens );
-
-         return true;
-    }
-
-
-    ///transfer tokens within the lava balances
-    //Requires approval
-   function _transferTokensFrom( address from, address to,address token,  uint tokens) internal returns (bool success) {
-        ERC20Interface(token).transferFrom(from, to, tokens );  //??
-
-       return true;
-   }
-
-
-
+ 
    /*
     Approves lava tokens for another smart contract ('TO field') and call the contracts receiveApproval method all in one fell swoop
 
@@ -397,7 +382,7 @@ contract LavaWallet is ECRecovery{
         // do something ?
 
      }*/
- 
+
 
 
      function addressContainsContract(address _to) view internal returns (bool)
