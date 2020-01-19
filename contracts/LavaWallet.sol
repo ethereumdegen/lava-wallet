@@ -1,7 +1,19 @@
 pragma solidity ^0.5.16;
 
 
-//pragma experimental ABIEncoderV2;
+/*
+
+LAVAWALLET is a Meta Transaction Solution using EIP 712
+
+
+Simply approve your tokens to this contract to give them super powers!
+
+
+*/
+
+
+
+
 
 /**
  * @title SafeMath
@@ -91,15 +103,6 @@ contract ECRecovery {
 
 
 
-/*
-
-This is a token wallet contract
-
-APPROVE your tokens to this contract to give them super powers
-
-Tokens can be sucked into and spent from the contract with only an ecSignature from the owner
-
-*/
 
 contract ERC20Interface {
     function totalSupply() public view returns (uint);
@@ -132,26 +135,8 @@ contract LavaWallet is ECRecovery{
 
   using SafeMath for uint;
 
-  // balances[tokenContractAddress][EthereumAccountAddress] = 0
-  // mapping(address => mapping (address => uint256)) balances;
-
-   //token => owner => spender : amount
-//   mapping(address => mapping (address => mapping (address => uint256))) allowed;
-
-   //mapping(address => uint256) depositedTokens;
-
    mapping(bytes32 => uint256) burnedSignatures;
 
-
-  //event Transfer(address indexed from, address indexed to,address token, uint tokens);
-  //event Approval(address indexed tokenOwner, address indexed spender,address token, uint tokens);
-
-
-
-  /*struct EIP712Domain {
-      string  name;
-      address verifyingContract;
-  }*/
 
 
   struct LavaPacket {
@@ -162,7 +147,6 @@ contract LavaWallet is ECRecovery{
     address wallet;  //this contract address
     address token;
     uint256 tokens;
-  //  address relayerRewardToken;
     uint256 relayerRewardTokens;
     uint256 expires;
     uint256 nonce;
@@ -171,12 +155,8 @@ contract LavaWallet is ECRecovery{
 
   /*
       MUST update these if architecture changes !!
-      MAKE SURE there are no spaces !
+      MAKE SURE there are NO spaces !
   */
-
-
-
-
     bytes32 constant EIP712DOMAIN_TYPEHASH = keccak256(
           "EIP712Domain(string contractName,string version,uint256 chainId,address verifyingContract)"
       );
@@ -197,13 +177,6 @@ contract LavaWallet is ECRecovery{
     }
 
 
-    /*  function getDomainHash(EIP712Domain eip712Domain)  pure returns (bytes32) {
-            return keccak256(abi.encode(
-                EIP712DOMAIN_TYPEHASH,
-                keccak256(bytes(eip712Domain.name)),
-                eip712Domain.verifyingContract
-            ));
-        }*/
 
 
   bytes32 constant LAVAPACKET_TYPEHASH = keccak256(
@@ -264,8 +237,8 @@ contract LavaWallet is ECRecovery{
 
 
         /*
-        This uses the metaTX signature and the fact that the ERC20 tokens are Approved to this contract to absorb the tokens into this contract.
-        Then, they can be sent out by this contract using .Tranfer using the other methods.
+        This uses the metaTX signature and the fact that the ERC20 tokens are Approved to this contract to send them out via the relays eth TX.
+
         */
 
    function _validatePacketSignature(  string memory methodName, address relayAuthority,address from,address to, address token,uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce,  bytes memory signature) internal returns (bool success)
@@ -331,8 +304,7 @@ contract LavaWallet is ECRecovery{
 
 
    /*
-    Approve lava tokens for a smart contract and call the contracts receiveApproval method all in one fell swoop
-
+    Approves lava tokens for another smart contract ('TO field') and call the contracts receiveApproval method all in one fell swoop
 
     */
 
@@ -425,12 +397,7 @@ contract LavaWallet is ECRecovery{
         // do something ?
 
      }*/
-
-
-
-
-
-
+ 
 
 
      function addressContainsContract(address _to) view internal returns (bool)
