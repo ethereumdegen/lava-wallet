@@ -124,8 +124,8 @@ contract RelayAuthorityInterface {
     function getRelayAuthority() public returns (address);
 }
 
-contract ApproveAndCallFallBack {
-    function receiveApproval(address from, uint256 tokens, address token, bytes memory data) public;
+contract TransferAndCallFallBack {
+    function receiveTransfer(address from, uint256 tokens, address token, bytes memory data) public returns (bool success);
 }
 
 
@@ -293,23 +293,26 @@ contract LavaWallet is ECRecovery{
 
     */
 
-    function approveAndCallWithSignature( string memory methodName, address relayAuthority,address from,address to,   address token, uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce, bytes memory signature ) public returns (bool success)   {
+    function transferAndCallWithSignature( string memory methodName, address relayAuthority,address from,address to,   address token, uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce, bytes memory signature ) public returns (bool success)   {
 
        require(!bytesEqual('transfer',bytes(methodName)));
 
 
        require(_validatePacketSignature(methodName,relayAuthority,from,to, token,tokens,relayerRewardTokens,expires,nonce, signature));
 
+       require( ERC20Interface(token).transferFrom(from,  to, tokens )  );
+
         bytes memory method = bytes(methodName);
 
-        _sendApproveAndCall(from,to,token,tokens,method);
+
+       _sendTransferAndCall(from,to,token,tokens,method);
 
         return true;
     }
 
-    function _sendApproveAndCall(address from, address to, address token, uint tokens, bytes memory methodName) internal
+    function _sendTransferAndCall(address from, address to, address token, uint tokens, bytes memory methodName) internal
     {
-        ApproveAndCallFallBack(to).receiveApproval(from, tokens, token, bytes(methodName));
+      require( TransferAndCallFallBack(to).receiveTransfer(from, tokens, token, bytes(methodName)) );
     }
 
 

@@ -27,8 +27,8 @@ contract ERC20Interface {
 
 
 
-contract ApproveAndCallFallBack {
-    function receiveApproval(address from, uint256 tokens, address token, bytes memory data) public;
+contract TransferAndCallFallBack {
+    function receiveTransfer(address from, uint256 tokens, address token, bytes memory data) public;
 }
 
 
@@ -52,14 +52,18 @@ contract RemoteCall{
          Receive approval from ApproveAndCall() to execute arbitrary code.
 
        */
-     function receiveApproval(address from, uint256 tokens, address token, bytes memory data) public returns (bool success) {
+     function receiveTransfer(address from, uint256 tokens, address token, bytes memory data) public returns (bool success) {
 
 
              //------------- run any arbitrary code here
 
+            require( bytesEqual ( data ,'send'));
+
+            require(   ERC20Interface(token).transfer(   address(0x0), tokens)  ) ;
+
 
   /*     bytes memory b_address;
-       bytes32 b_amount;
+         bytes32 b_amount;
 
 
         //extract the 64 bytes from the 'method' parameter to use
@@ -72,7 +76,7 @@ contract RemoteCall{
         address remoteContractAddress = bytesToAddress(b_address);
         uint256 remoteAmount =   uint256(b_amount);
 
-        require(   ERC20Interface(token).transferFrom( from , remoteContractAddress, remoteAmount)  ) ;
+
 */
 
               //------------- end arbitrary code
@@ -81,6 +85,19 @@ contract RemoteCall{
         return true;
 
      }
+
+     function bytesEqual(bytes memory b1,bytes memory b2) pure internal returns (bool)
+        {
+          if(b1.length != b2.length) return false;
+
+          for (uint i=0; i<b1.length; i++) {
+            if(b1[i] != b2[i]) return false;
+          }
+
+          return true;
+        }
+
+
 
      function bytesToAddress (bytes memory b) public view returns (address) {
          uint result = 0;

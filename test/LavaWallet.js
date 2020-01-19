@@ -477,10 +477,10 @@ contract("LavaWallet", (accounts) => {
 
                   //web3.eth.abi.encodeFunctionCall(jsonInterface, parameters);  // use in the future ?
 
-                  var methodName = web3.eth.abi.encodeParameters(['address','bytes32'], [test_account.address, web3utils.fromAscii(10)]);
+                  var methodName = web3.eth.abi.encodeParameters(['string','address','bytes32'], ['send',test_account.address, web3utils.hexToBytes('0x10')]);
 
-                  methodName = web3.eth.abi.encodeParameters(['address'], [test_account.address]);
-                  methodName = ('demutete').toString()
+                //  methodName = web3.eth.abi.encodeParameters(['address'], [test_account.address]);
+                  methodName = ('send').toString()
 
                   //var methodName =  'transfer'    //convert to bytes
                   var relayAuthority = test_account.address// self for right now , could be anyone
@@ -489,6 +489,8 @@ contract("LavaWallet", (accounts) => {
                   var walletAddress=walletContract.options.address
                   var tokenAddress=tokenContract.options.address
                   var tokenAmount=200
+
+                  console.log('from,to',from,to)
 
                   var relayerRewardTokens=100
                   var expires=336504400
@@ -511,6 +513,11 @@ contract("LavaWallet", (accounts) => {
 
 
 
+
+               var response = await   tokenContract.methods.balanceOf( test_account.address ).call( );
+               console.log('balance of user ',response)
+
+
               var response = await   tokenContract.methods.approve(
                      walletContract.options.address,
                      3000000000000
@@ -530,8 +537,8 @@ contract("LavaWallet", (accounts) => {
 
 
                   var recoveredAddress = LavaTestUtils.lavaPacketHasValidSignature(
-                          typedData,
-                           signature )
+                                                                typedData,
+                                                                 signature )
 
                   assert.equal(test_account.address.toLowerCase(), recoveredAddress.toLowerCase() )
 
@@ -554,7 +561,7 @@ contract("LavaWallet", (accounts) => {
 
 
 
-                  var response =  await   walletContract.methods.approveAndCallWithSignature(
+                  var response =  await   walletContract.methods.transferAndCallWithSignature(
                          methodName,
                          relayAuthority,
                          from,
