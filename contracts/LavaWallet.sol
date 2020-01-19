@@ -304,18 +304,9 @@ contract LavaWallet is ECRecovery{
           require(burnedSignature == 0x0 );
 
 
-         //transferRelayerReward into this contract (should be approved to it) and then to the relayer!
-         //this is reverting if amounts are nonzero (approval?)
-
+         //remember to tip your relayer!
          require( ERC20Interface(token).transferFrom(from, msg.sender, relayerRewardTokens )  );
 
-
-         //require(_transferTokensFrom(from, address(this), token, relayerRewardTokens));
-         //require(_transferTokens(msg.sender, token, relayerRewardTokens));
-
-
-         //transfer tokens into this contract to stage them for sending out
-         //require(_transferTokensFrom(from, address(this), token, tokens));
 
 
        return true;
@@ -336,20 +327,6 @@ contract LavaWallet is ECRecovery{
 
        return true;
    }
-
-
-/*
-   function approveTokensWithSignature(LavaPacket packet, bytes signature) public returns (bool success)
-   {
-       require(bytesEqual('approve',bytes(methodName)));
-
-       bytes32 sigHash = getLavaTypedDataHash(packet);
-
-       require(_tokenApprovalWithSignature(packet,sigHash,signature));
-
-
-       return true;
-   }*/
 
 
 
@@ -387,11 +364,6 @@ contract LavaWallet is ECRecovery{
 
 
      require(_validatePacketSignature(methodName,relayAuthority,from,to, token,tokens,relayerRewardTokens,expires,nonce, signature));
-
-        //this is failing?
-     //   require(_transferTokens(  to, token,  tokens));
-
-    // require( ERC20Interface(token).transferFrom(from, msg.sender, relayerRewardTokens )  );
 
      require( ERC20Interface(token).transferFrom(from,  to, tokens )  );
 
