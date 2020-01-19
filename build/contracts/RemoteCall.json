@@ -1,6 +1,17 @@
 {
-  "contractName": "ApproveAndCallFallBack",
+  "contractName": "RemoteCall",
   "abi": [
+    {
+      "inputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "fallback"
+    },
     {
       "constant": false,
       "inputs": [
@@ -26,17 +37,44 @@
         }
       ],
       "name": "receiveApproval",
-      "outputs": [],
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "success",
+          "type": "bool"
+        }
+      ],
       "payable": false,
       "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "b",
+          "type": "bytes"
+        }
+      ],
+      "name": "bytesToAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokens\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"token\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"receiveApproval\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/andy/dev/lava-wallet/contracts/RemoteCall.sol\":\"ApproveAndCallFallBack\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/andy/dev/lava-wallet/contracts/RemoteCall.sol\":{\"keccak256\":\"0x352fa5a3f763e7d1843d819e7b4044e54ff335d37eb53641a8bcf6a09de7cf61\",\"urls\":[\"bzz-raw://32a9932cb278812cb4de421ad3e7847bb717bf66ca438850c677176c4cb3dedc\",\"dweb:/ipfs/QmcoM6kZicL5RuLDV9MAu3As2BDzUJ1wRsBdqwNTUcGjfi\"]}},\"version\":1}",
-  "bytecode": "0x",
-  "deployedBytecode": "0x",
-  "sourceMap": "",
-  "deployedSourceMap": "",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"b\",\"type\":\"bytes\"}],\"name\":\"bytesToAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokens\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"token\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"receiveApproval\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"success\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/andy/dev/lava-wallet/contracts/RemoteCall.sol\":\"RemoteCall\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/andy/dev/lava-wallet/contracts/RemoteCall.sol\":{\"keccak256\":\"0x352fa5a3f763e7d1843d819e7b4044e54ff335d37eb53641a8bcf6a09de7cf61\",\"urls\":[\"bzz-raw://32a9932cb278812cb4de421ad3e7847bb717bf66ca438850c677176c4cb3dedc\",\"dweb:/ipfs/QmcoM6kZicL5RuLDV9MAu3As2BDzUJ1wRsBdqwNTUcGjfi\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50610485806100206000396000f3fe6080604052600436106100295760003560e01c806342526e4e1461002e5780638f4ffcb114610136575b600080fd5b34801561003a57600080fd5b506100f46004803603602081101561005157600080fd5b810190808035906020019064010000000081111561006e57600080fd5b82018360208201111561008057600080fd5b803590602001918460018302840111640100000000831117156100a257600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600081840152601f19601f820116905080830192505050505050509192919290505050610260565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561014257600080fd5b506102466004803603608081101561015957600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919080359060200190929190803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803590602001906401000000008111156101c057600080fd5b8201836020820111156101d257600080fd5b803590602001918460018302840111640100000000831117156101f457600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600081840152601f19601f820116905080830192505050505050509192919290505050610318565b604051808215151515815260200191505060405180910390f35b6000806000905060008090505b835181101561030e57600084828151811061028457fe5b602001015160f81c60f81b60f81c60ff169050603081101580156102a9575060398111155b156102ba5760308103601084020192505b604181101580156102cc5750605a8111155b156102dd5760378103601084020192505b606181101580156102ef5750607a8111155b156103005760578103601084020192505b50808060010191505061026d565b5080915050919050565b6000606060006020840151915060408401519050600061033783610260565b905060008260001c90508673ffffffffffffffffffffffffffffffffffffffff166323b872dd8a84846040518463ffffffff1660e01b8152600401808473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018281526020019350505050602060405180830381600087803b1580156103fc57600080fd5b505af1158015610410573d6000803e3d6000fd5b505050506040513d602081101561042657600080fd5b810190808051906020019092919050505061044057600080fd5b600194505050505094935050505056fea265627a7a72315820197b2cb733081166c5861f04ac27715ee9f2b524623d1bba9a70a1b91d64e84a64736f6c63430005100032",
+  "deployedBytecode": "0x6080604052600436106100295760003560e01c806342526e4e1461002e5780638f4ffcb114610136575b600080fd5b34801561003a57600080fd5b506100f46004803603602081101561005157600080fd5b810190808035906020019064010000000081111561006e57600080fd5b82018360208201111561008057600080fd5b803590602001918460018302840111640100000000831117156100a257600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600081840152601f19601f820116905080830192505050505050509192919290505050610260565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561014257600080fd5b506102466004803603608081101561015957600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919080359060200190929190803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803590602001906401000000008111156101c057600080fd5b8201836020820111156101d257600080fd5b803590602001918460018302840111640100000000831117156101f457600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600081840152601f19601f820116905080830192505050505050509192919290505050610318565b604051808215151515815260200191505060405180910390f35b6000806000905060008090505b835181101561030e57600084828151811061028457fe5b602001015160f81c60f81b60f81c60ff169050603081101580156102a9575060398111155b156102ba5760308103601084020192505b604181101580156102cc5750605a8111155b156102dd5760378103601084020192505b606181101580156102ef5750607a8111155b156103005760578103601084020192505b50808060010191505061026d565b5080915050919050565b6000606060006020840151915060408401519050600061033783610260565b905060008260001c90508673ffffffffffffffffffffffffffffffffffffffff166323b872dd8a84846040518463ffffffff1660e01b8152600401808473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018281526020019350505050602060405180830381600087803b1580156103fc57600080fd5b505af1158015610410573d6000803e3d6000fd5b505050506040513d602081101561042657600080fd5b810190808051906020019092919050505061044057600080fd5b600194505050505094935050505056fea265627a7a72315820197b2cb733081166c5861f04ac27715ee9f2b524623d1bba9a70a1b91d64e84a64736f6c63430005100032",
+  "sourceMap": "977:1575:3:-;;;1004:30;8:9:-1;5:2;;;30:1;27;20:12;5:2;1004:30:3;977:1575;;;;;;",
+  "deployedSourceMap": "977:1575:3:-;;;;;;;;;;;;;;;;;;;;;;;1132:8;;;1998:547;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1998:547:3;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;1998:547:3;;;;;;;;;;21:11:-1;8;5:28;2:2;;;46:1;43;36:12;2:2;1998:547:3;;35:9:-1;28:4;12:14;8:25;5:40;2:2;;;58:1;55;48:12;2:2;1998:547:3;;;;;;100:9:-1;95:1;81:12;77:20;67:8;63:35;60:50;39:11;25:12;22:29;11:107;8:2;;;131:1;128;121:12;8:2;1998:547:3;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;30:3:-1;22:6;14;1:33;99:1;93:3;85:6;81:16;74:27;137:4;133:9;126:4;121:3;117:14;113:30;106:37;;169:3;161:6;157:16;147:26;;1998:547:3;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;1254:737;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1254:737:3;;;;;;13:3:-1;8;5:12;2:2;;;30:1;27;20:12;2:2;1254:737:3;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;21:11:-1;8;5:28;2:2;;;46:1;43;36:12;2:2;1254:737:3;;35:9:-1;28:4;12:14;8:25;5:40;2:2;;;58:1;55;48:12;2:2;1254:737:3;;;;;;100:9:-1;95:1;81:12;77:20;67:8;63:35;60:50;39:11;25:12;22:29;11:107;8:2;;;131:1;128;121:12;8:2;1254:737:3;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;30:3:-1;22:6;14;1:33;99:1;93:3;85:6;81:16;74:27;137:4;133:9;126:4;121:3;117:14;113:30;106:37;;169:3;161:6;157:16;147:26;;1254:737:3;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;1998:547;2060:7;2080:11;2094:1;2080:15;;2111:6;2120:1;2111:10;;2106:398;2127:1;:8;2123:1;:12;2106:398;;;2157:6;2177:1;2179;2177:4;;;;;;;;;;;;;;;;2171:11;;2166:17;;2157:26;;2207:2;2202:1;:7;;:18;;;;;2218:2;2213:1;:7;;2202:18;2198:90;;;2269:2;2265:1;:6;2259:2;2250:6;:11;:22;2241:31;;2198:90;2310:2;2305:1;:7;;:17;;;;;2320:2;2316:1;:6;;2305:17;2302:88;;;2371:2;2367:1;:6;2361:2;2352:6;:11;:22;2343:31;;2302:88;2412:2;2407:1;:7;;:18;;;;;2422:3;2418:1;:7;;2407:18;2404:89;;;2474:2;2470:1;:6;2464:2;2455:6;:11;:22;2446:31;;2404:89;2106:398;2137:3;;;;;;;2106:398;;;;2529:6;2514:22;;;1998:547;;;:::o;1254:737::-;1359:12;1443:22;1474:16;1622:2;1616:4;1612:13;1606:20;1593:33;;1667:2;1661:4;1657:13;1651:20;1639:32;;1694:29;1726:25;1741:9;1726:14;:25::i;:::-;1694:57;;1761:20;1794:8;1786:17;;1761:42;;1840:5;1825:34;;;1861:4;1868:21;1891:12;1825:79;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1825:79:3;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;1825:79:3;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;1825:79:3;;;;;;;;;;;;;;;;1814:93;;;;;;1978:4;1971:11;;;;;;1254:737;;;;;;:::o",
   "source": "pragma solidity ^0.5.0;\n\n\n\n/**------------------------------------\n\n Remote Execution Script for LAVA protocol\n\n\n------------------------------------*/\n\n\n\ncontract ERC20Interface {\n    function totalSupply() public view returns (uint);\n    function balanceOf(address tokenOwner) public view returns (uint balance);\n    function allowance(address tokenOwner, address spender) public view returns (uint remaining);\n    function transfer(address to, uint tokens) public returns (bool success);\n    function approve(address spender, uint tokens) public returns (bool success);\n    function transferFrom(address from, address to, uint tokens) public returns (bool success);\n\n    event Transfer(address indexed from, address indexed to, uint tokens);\n    event Approval(address indexed tokenOwner, address indexed spender, uint tokens);\n}\n\n\n\n\n\ncontract ApproveAndCallFallBack {\n    function receiveApproval(address from, uint256 tokens, address token, bytes memory data) public;\n}\n\n\ncontract RemoteCall{\n\n\n    constructor( ) public {\n\n    }\n\n    /**\n    * Do not allow ETH to enter\n    */\n     function() external payable\n     {\n         revert();\n     }\n\n\n\n\n       /*\n         Receive approval from ApproveAndCall() to execute arbitrary code.\n\n       */\n     function receiveApproval(address from, uint256 tokens, address token, bytes memory data) public returns (bool success) {\n\n\n             //------------- run any arbitrary code here\n\n\n       bytes memory b_address;\n       bytes32 b_amount;\n\n\n        //extract the 64 bytes from the 'method' parameter to use\n          assembly {\n            b_address := mload(add(data, 32))\n            b_amount := mload(add(data, 64))\n          }\n\n\n        address remoteContractAddress = bytesToAddress(b_address);\n        uint256 remoteAmount =   uint256(b_amount);\n\n        require(   ERC20Interface(token).transferFrom( from , remoteContractAddress, remoteAmount)  ) ;\n\n\n              //------------- end arbitrary code\n\n\n        return true;\n\n     }\n\n     function bytesToAddress (bytes memory b) public view returns (address) {\n         uint result = 0;\n         for (uint i = 0; i < b.length; i++) {\n             uint c = uint(uint8(b[i]));\n             if (c >= 48 && c <= 57) {\n                 result = result * 16 + (c - 48);\n             }\n             if(c >= 65 && c<= 90) {\n                 result = result * 16 + (c - 55);\n             }\n             if(c >= 97 && c<= 122) {\n                 result = result * 16 + (c - 87);\n             }\n         }\n         return address(result);\n      }\n\n\n\n\n\n}\n",
   "sourcePath": "/home/andy/dev/lava-wallet/contracts/RemoteCall.sol",
   "ast": {
@@ -6417,7 +6455,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.21",
-  "updatedAt": "2020-01-19T16:47:06.308Z",
+  "updatedAt": "2020-01-19T16:47:06.315Z",
   "devdoc": {
     "methods": {}
   },

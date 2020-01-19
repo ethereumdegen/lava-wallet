@@ -268,7 +268,7 @@ contract LavaWallet is ECRecovery{
 
 
           //make sure the signer is the from field
-          require(from == recoveredSignatureSigner);
+          require(from == recoveredSignatureSigner); //failing !
 
 
           //make sure the signature has not expired
@@ -287,7 +287,7 @@ contract LavaWallet is ECRecovery{
        return true;
    }
 
- 
+
    /*
     Approves lava tokens for another smart contract ('TO field') and call the contracts receiveApproval method all in one fell swoop
 

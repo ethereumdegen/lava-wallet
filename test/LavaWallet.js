@@ -390,7 +390,7 @@ contract("LavaWallet", (accounts) => {
 
                         //Approve the tokens to the wallet contract
 
-                        //does not work ! ?
+
                            var response = await   tokenContract.methods.approve(
                                   walletContract.options.address,
                                   3000000000000
@@ -487,7 +487,7 @@ contract("LavaWallet", (accounts) => {
 
 
                         });
-
+                        
 
 
 
