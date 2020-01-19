@@ -1,11 +1,91 @@
 {
-  "contractName": "ExtendedMath",
-  "abi": [],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/andy/dev/lava-wallet/contracts/TestToken.sol\":\"ExtendedMath\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/andy/dev/lava-wallet/contracts/TestToken.sol\":{\"keccak256\":\"0x3c52fff91d0f9c123b24f508ace17ba8bf6156331b628cb42326366dc7c0976c\",\"urls\":[\"bzz-raw://6a105e3aefb993d4dda8a27b4a2c57579960e6cedc433549d1b889f1e17db519\",\"dweb:/ipfs/Qmdh5SHGGUDEg7z56AbfvmiQUwqnfZ32LRfg7gAQAooKDB\"]}},\"version\":1}",
-  "bytecode": "0x60556023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a723158205d4c76824f6a125f06556eccfbcda61994452d864d9e25279122e9a73ec9e10864736f6c63430005100032",
-  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a723158205d4c76824f6a125f06556eccfbcda61994452d864d9e25279122e9a73ec9e10864736f6c63430005100032",
-  "sourceMap": "1072:209:4:-;;132:2:-1;166:7;155:9;146:7;137:37;255:7;249:14;246:1;241:23;235:4;232:33;222:2;;269:9;222:2;293:9;290:1;283:20;323:4;314:7;306:22;347:7;338;331:24",
-  "deployedSourceMap": "1072:209:4:-;;;;;;;;",
+  "contractName": "Owned",
+  "abi": [
+    {
+      "inputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "_from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "_to",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "newOwner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "acceptOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"_from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"constant\":false,\"inputs\":[],\"name\":\"acceptOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"newOwner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/andy/dev/lava-wallet/contracts/TestToken.sol\":\"Owned\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/andy/dev/lava-wallet/contracts/TestToken.sol\":{\"keccak256\":\"0x3c52fff91d0f9c123b24f508ace17ba8bf6156331b628cb42326366dc7c0976c\",\"urls\":[\"bzz-raw://6a105e3aefb993d4dda8a27b4a2c57579960e6cedc433549d1b889f1e17db519\",\"dweb:/ipfs/Qmdh5SHGGUDEg7z56AbfvmiQUwqnfZ32LRfg7gAQAooKDB\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506103ed806100606000396000f3fe608060405234801561001057600080fd5b506004361061004c5760003560e01c806379ba5097146100515780638da5cb5b1461005b578063d4ee1d90146100a5578063f2fde38b146100ef575b600080fd5b610059610133565b005b6100636102d0565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6100ad6102f5565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6101316004803603602081101561010557600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061031b565b005b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161461018d57600080fd5b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a3600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff166000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506000600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161461037457600080fd5b80600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055505056fea265627a7a723158205e333791ebdb802a88b67d015dbae42a3d3fe392447d647351bddd1b74cc144764736f6c63430005100032",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061004c5760003560e01c806379ba5097146100515780638da5cb5b1461005b578063d4ee1d90146100a5578063f2fde38b146100ef575b600080fd5b610059610133565b005b6100636102d0565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6100ad6102f5565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6101316004803603602081101561010557600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061031b565b005b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161461018d57600080fd5b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a3600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff166000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506000600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161461037457600080fd5b80600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055505056fea265627a7a723158205e333791ebdb802a88b67d015dbae42a3d3fe392447d647351bddd1b74cc144764736f6c63430005100032",
+  "sourceMap": "2845:614:4:-;;;3002:58;8:9:-1;5:2;;;30:1;27;20:12;5:2;3002:58:4;3042:10;3034:5;;:18;;;;;;;;;;;;;;;;;;2845:614;;;;;;",
+  "deployedSourceMap": "2845:614:4:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;2845:614:4;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;3260:196;;;:::i;:::-;;2867:20;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;2894:23;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;3152:102;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;3152:102:4;;;;;;;;;;;;;;;;;;;:::i;:::-;;3260:196;3327:8;;;;;;;;;;;3313:22;;:10;:22;;;3305:31;;;;;;3380:8;;;;;;;;;;;3352:37;;3373:5;;;;;;;;;;;3352:37;;;;;;;;;;;;3408:8;;;;;;;;;;;3400:5;;:16;;;;;;;;;;;;;;;;;;3446:1;3427:8;;:21;;;;;;;;;;;;;;;;;;3260:196::o;2867:20::-;;;;;;;;;;;;;:::o;2894:23::-;;;;;;;;;;;;;:::o;3152:102::-;3119:5;;;;;;;;;;;3105:19;;:10;:19;;;3097:28;;;;;;3237:9;3226:8;;:20;;;;;;;;;;;;;;;;;;3152:102;:::o",
   "source": "\n\npragma solidity ^0.5.16;\n\n\n// ----------------------------------------------------------------------------\n\n// 'Test Token' contract\n\n// Mineable ERC20 Token using Proof Of Work\n\n//\n\n// Symbol      : TEST\n\n// Name        : Test Token\n\n// Total supply: 21,000,000.00\n\n// Decimals    : 8\n\n//\n\n\n// ----------------------------------------------------------------------------\n\n\n\n// ----------------------------------------------------------------------------\n\n// Safe maths\n\n// ----------------------------------------------------------------------------\n\nlibrary SafeMath {\n\n    function add(uint a, uint b) internal pure returns (uint c) {\n\n        c = a + b;\n\n        require(c >= a);\n\n    }\n\n    function sub(uint a, uint b) internal pure returns (uint c) {\n\n        require(b <= a);\n\n        c = a - b;\n\n    }\n\n    function mul(uint a, uint b) internal pure returns (uint c) {\n\n        c = a * b;\n\n        require(a == 0 || c / a == b);\n\n    }\n\n    function div(uint a, uint b) internal pure returns (uint c) {\n\n        require(b > 0);\n\n        c = a / b;\n\n    }\n\n}\n\n\n\nlibrary ExtendedMath {\n\n\n    //return the smaller of the two inputs (a or b)\n    function limitLessThan(uint a, uint b) internal pure returns (uint c) {\n\n        if(a > b) return b;\n\n        return a;\n\n    }\n}\n\n// ----------------------------------------------------------------------------\n\n// ERC Token Standard #20 Interface\n\n// https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20-token-standard.md\n\n// ----------------------------------------------------------------------------\n\ncontract ERC20Interface {\n\n    function totalSupply() public view returns (uint);\n\n    function balanceOf(address tokenOwner) public view returns (uint balance);\n\n    function allowance(address tokenOwner, address spender) public view returns (uint remaining);\n\n    function transfer(address to, uint tokens) public returns (bool success);\n\n    function approve(address spender, uint tokens) public returns (bool success);\n\n    function transferFrom(address from, address to, uint tokens) public returns (bool success);\n\n\n    event Transfer(address indexed from, address indexed to, uint tokens);\n\n    event Approval(address indexed tokenOwner, address indexed spender, uint tokens);\n\n}\n\n\n\n// ----------------------------------------------------------------------------\n\n// Contract function to receive approval and execute function in one call\n\n//\n\n// Borrowed from MiniMeToken\n\n// ----------------------------------------------------------------------------\n\ncontract ApproveAndCallFallBack {\n\n    function receiveApproval(address from, uint256 tokens, address token, bytes memory data) public;\n\n}\n\n\n\n// ----------------------------------------------------------------------------\n\n// Owned contract\n\n// ----------------------------------------------------------------------------\n\ncontract Owned {\n\n    address public owner;\n\n    address public newOwner;\n\n\n    event OwnershipTransferred(address indexed _from, address indexed _to);\n\n\n   constructor() public {\n\n        owner = msg.sender;\n\n    }\n\n\n    modifier onlyOwner {\n\n        require(msg.sender == owner);\n\n        _;\n\n    }\n\n\n    function transferOwnership(address _newOwner) public onlyOwner {\n\n        newOwner = _newOwner;\n\n    }\n\n    function acceptOwnership() public {\n\n        require(msg.sender == newOwner);\n\n        emit OwnershipTransferred(owner, newOwner);\n\n        owner = newOwner;\n\n        newOwner = address(0);\n\n    }\n\n}\n\n\n\n// ----------------------------------------------------------------------------\n\n// ERC20 Token, with the addition of symbol, name and decimals and an\n\n// initial fixed supply\n\n// ----------------------------------------------------------------------------\n\ncontract TestToken is ERC20Interface, Owned {\n\n    using SafeMath for uint;\n    using ExtendedMath for uint;\n\n\n    string public symbol;\n\n    string public  name;\n\n    uint8 public decimals;\n\n    uint public _totalSupply;\n\n\n\n     uint public latestDifficultyPeriodStarted;\n\n\n\n    uint public epochCount;//number of 'blocks' mined\n\n\n    uint public _BLOCKS_PER_READJUSTMENT = 1024;\n\n\n    //a little number\n    uint public  _MINIMUM_TARGET = 2**16;\n\n\n      //a big number is easier ; just find a solution that is smaller\n    //uint public  _MAXIMUM_TARGET = 2**224;  bitcoin uses 224\n    uint public  _MAXIMUM_TARGET = 2**234;\n\n\n    uint public miningTarget;\n\n    bytes32 public challengeNumber;   //generate a new one when a new reward is minted\n\n\n\n    uint public rewardEra;\n    uint public maxSupplyForEra;\n\n\n    address public lastRewardTo;\n    uint public lastRewardAmount;\n    uint public lastRewardEthBlockNumber;\n\n    bool locked = false;\n\n    mapping(bytes32 => bytes32) solutionForChallenge;\n\n    uint public tokensMinted;\n\n    mapping(address => uint) balances;\n\n\n    mapping(address => mapping(address => uint)) allowed;\n\n\n    event Mint(address indexed from, uint reward_amount, uint epochCount, bytes32 newChallengeNumber);\n\n    // ------------------------------------------------------------------------\n\n    // Constructor\n\n    // ------------------------------------------------------------------------\n\n    constructor() public  {\n\n\n\n        symbol = \"TEST\";\n\n        name = \"Test Token\";\n\n        decimals = 8;\n\n        _totalSupply = 21000000 * 10**uint(decimals);\n\n        balances[msg.sender] = _totalSupply;\n\n        emit Transfer(address(msg.sender), owner, _totalSupply);\n\n\n    }\n\n\n\n\n\n\n\n    // ------------------------------------------------------------------------\n\n    // Total supply\n\n    // ------------------------------------------------------------------------\n\n    function totalSupply() public view returns (uint) {\n\n        return _totalSupply  - balances[address(0)];\n\n    }\n\n\n\n    // ------------------------------------------------------------------------\n\n    // Get the token balance for account `tokenOwner`\n\n    // ------------------------------------------------------------------------\n\n    function balanceOf(address tokenOwner) public view returns (uint balance) {\n\n        return balances[tokenOwner];\n\n    }\n\n\n\n    // ------------------------------------------------------------------------\n\n    // Transfer the balance from token owner's account to `to` account\n\n    // - Owner's account must have sufficient balance to transfer\n\n    // - 0 value transfers are allowed\n\n    // ------------------------------------------------------------------------\n\n    function transfer(address to, uint tokens) public returns (bool success) {\n\n        balances[msg.sender] = balances[msg.sender].sub(tokens);\n\n        balances[to] = balances[to].add(tokens);\n\n        emit Transfer(msg.sender, to, tokens);\n\n        return true;\n\n    }\n\n\n\n    // ------------------------------------------------------------------------\n\n    // Token owner can approve for `spender` to transferFrom(...) `tokens`\n\n    // from the token owner's account\n\n    //\n\n    // https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20-token-standard.md\n\n    // recommends that there are no checks for the approval double-spend attack\n\n    // as this should be implemented in user interfaces\n\n    // ------------------------------------------------------------------------\n\n    function approve(address spender, uint tokens) public returns (bool success) {\n\n        allowed[msg.sender][spender] = tokens;\n\n        emit Approval(msg.sender, spender, tokens);\n\n        return true;\n\n    }\n\n\n\n    // ------------------------------------------------------------------------\n\n    // Transfer `tokens` from the `from` account to the `to` account\n\n    //\n\n    // The calling account must already have sufficient tokens approve(...)-d\n\n    // for spending from the `from` account and\n\n    // - From account must have sufficient balance to transfer\n\n    // - Spender must have sufficient allowance to transfer\n\n    // - 0 value transfers are allowed\n\n    // ------------------------------------------------------------------------\n\n    function transferFrom(address from, address to, uint tokens) public returns (bool success) {\n\n        balances[from] = balances[from].sub(tokens);\n\n        allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);\n\n        balances[to] = balances[to].add(tokens);\n\n        emit Transfer(from, to, tokens);\n\n        return true;\n\n    }\n\n\n\n    // ------------------------------------------------------------------------\n\n    // Returns the amount of tokens approved by the owner that can be\n\n    // transferred to the spender's account\n\n    // ------------------------------------------------------------------------\n\n    function allowance(address tokenOwner, address spender) public view returns (uint remaining) {\n\n        return allowed[tokenOwner][spender];\n\n    }\n\n\n\n    // ------------------------------------------------------------------------\n\n    // Token owner can approve for `spender` to transferFrom(...) `tokens`\n\n    // from the token owner's account. The `spender` contract function\n\n    // `receiveApproval(...)` is then executed\n\n    // ------------------------------------------------------------------------\n\n    function approveAndCall(address spender, uint tokens, bytes memory data) public returns (bool success) {\n\n        allowed[msg.sender][spender] = tokens;\n\n        emit Approval(msg.sender, spender, tokens);\n\n        ApproveAndCallFallBack(spender).receiveApproval(msg.sender, tokens, address(this), data);\n\n        return true;\n\n    }\n\n\n\n    // ------------------------------------------------------------------------\n\n    // Don't accept ETH\n\n    // ------------------------------------------------------------------------\n\n    function () external payable {\n\n        revert();\n\n    }\n\n\n\n    // ------------------------------------------------------------------------\n\n    // Owner can transfer out any accidentally sent ERC20 tokens\n\n    // ------------------------------------------------------------------------\n\n    function transferAnyERC20Token(address tokenAddress, uint tokens) public onlyOwner returns (bool success) {\n\n        return ERC20Interface(tokenAddress).transfer(owner, tokens);\n\n    }\n\n}\n",
   "sourcePath": "/home/andy/dev/lava-wallet/contracts/TestToken.sol",
   "ast": {
@@ -16084,7 +16164,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.21",
-  "updatedAt": "2020-01-19T00:51:59.010Z",
+  "updatedAt": "2020-01-19T00:51:59.013Z",
   "devdoc": {
     "methods": {}
   },

@@ -306,9 +306,9 @@ contract("LavaWallet", (accounts) => {
                           var to= "0x357FfaDBdBEe756aA686Ef6843DA359E2a85229c"
                           var walletAddress=walletContract.options.address
                           var tokenAddress=tokenContract.options.address
-                          var tokenAmount=2000000
+                          var tokenAmount=200
                         //  var relayerRewardToken=tokenContract.options.address
-                          var relayerRewardTokens=1000000
+                          var relayerRewardTokens=100
                           var expires=336504400
                           var nonce='0xc18f687c56f1b2749af7d6151fa351'
 
@@ -382,7 +382,7 @@ contract("LavaWallet", (accounts) => {
 
 
 
- 
+
 
                        var response = await   tokenContract.methods.balanceOf( test_account.address ).call( );
                        console.log('balance of user ',response)
@@ -411,14 +411,14 @@ contract("LavaWallet", (accounts) => {
 
                             console.log('test acct address is '+test_account.address)
 
-                            var response = await   tokenContract.methods.transfer(
+                          /*  var response = await   tokenContract.methods.transfer(
                                    walletContract.options.address,
                                    3000000000000
                                    ).send( {from: test_account.address} )
 
                              var response = await   tokenContract.methods.balanceOf(  walletContract.options.address ).call( );
                              console.log('balance of contract ',response)
-
+                            */
 
 
                           //do the meta tx
@@ -472,7 +472,6 @@ contract("LavaWallet", (accounts) => {
                                  relayAuthority,
                                  from,
                                  to,
-                                 walletAddress,
                                  tokenAddress,
                                  tokenAmount,
                                  relayerRewardTokens,

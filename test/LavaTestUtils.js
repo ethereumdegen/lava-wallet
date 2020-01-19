@@ -125,7 +125,7 @@ function typedSignatureHash(typedData) {
             domain: {
                 contractName: 'Lava Wallet',
                 version: '1',
-                chainId: 1,
+                chainId: 5,  //pretend goreli
                 verifyingContract: walletAddress
             },
             message: {
