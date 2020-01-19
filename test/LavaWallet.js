@@ -480,7 +480,7 @@ contract("LavaWallet", (accounts) => {
                   var methodName = web3.eth.abi.encodeParameters(['address','bytes32'], [test_account.address, web3utils.fromAscii(10)]);
 
                   methodName = web3.eth.abi.encodeParameters(['address'], [test_account.address]);
-                  methodName = ('demutate').toString()
+                  methodName = ('demutete').toString()
 
                   //var methodName =  'transfer'    //convert to bytes
                   var relayAuthority = test_account.address// self for right now , could be anyone
@@ -534,6 +534,23 @@ contract("LavaWallet", (accounts) => {
                            signature )
 
                   assert.equal(test_account.address.toLowerCase(), recoveredAddress.toLowerCase() )
+
+
+
+                  var response = await walletContract.methods.signatureIsValid(   methodName,
+                                                                       relayAuthority,
+                                                                       from,
+                                                                       to,
+                                                                       walletAddress,
+                                                                       tokenAddress,
+                                                                       tokenAmount,
+                                                                       relayerRewardTokens,
+                                                                       expires,
+                                                                       nonce,
+                                                                       signature).call( );
+                    console.log(' signatureIsValid ',response)
+                    assert.equal(response, true )
+
 
 
 
