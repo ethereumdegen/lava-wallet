@@ -315,7 +315,7 @@ contract LavaWallet is ECRecovery{
        return true;
     }
 
-    function _sendTransferAndCall(address from, address to, address token, uint tokens, bytes memory methodName) internal
+    function _sendTransferAndCall(address from, address to, address token, uint tokens, bytes memory methodName) internal returns (bool)
     {
         return TransferAndCallFallBack(to).receiveTransfer(from, tokens, token, bytes(methodName));
     }
