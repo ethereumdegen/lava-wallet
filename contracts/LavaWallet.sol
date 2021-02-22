@@ -11,6 +11,8 @@ LAVAWALLET is a Meta Transaction Solution using EIP 712
 Simply approve your tokens to this contract to give them super powers!
 
 
+Version 0.24
+
 */
 
 
@@ -297,14 +299,16 @@ contract LavaWallet is ECRecovery{
 
        require(!bytesEqual('transfer',bytes(methodName)));
 
-
        require(_validatePacketSignature(methodName,relayAuthority,from,to, token,tokens,relayerRewardTokens,expires,nonce, signature));
 
-      bytes memory method = bytes(methodName);
+        //transfer the tokens to the 'to' field address
+       require( ERC20Interface(token).transferFrom(from, to, tokens )  );
 
-        _sendApproveAndCall(from,to,token,tokens,method);
+       bytes memory method = bytes(methodName);       
 
-        return true;
+       _sendApproveAndCall(from,to,token,tokens,method);
+
+       return true;
     }
 
     function _sendApproveAndCall(address from, address to, address token, uint tokens, bytes memory methodName) internal
@@ -319,11 +323,10 @@ contract LavaWallet is ECRecovery{
 
      require(bytesEqual('transfer',bytes(methodName)));
 
-
      require(_validatePacketSignature(methodName,relayAuthority,from,to, token,tokens,relayerRewardTokens,expires,nonce, signature));
 
-     require( ERC20Interface(token).transferFrom(from,  to, tokens )  );
-
+      //transfer the tokens to the 'to' field address
+     require( ERC20Interface(token).transferFrom(from, to, tokens )  );
 
      return true;
 
