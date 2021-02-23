@@ -11,7 +11,7 @@ LAVAWALLET is a Meta Transaction Solution using EIP 712
 Simply approve your tokens to this contract to give them super powers!
 
 
-Version 0.24
+Version 0.25
 
 */
 
@@ -144,7 +144,7 @@ contract LavaWallet is ECRecovery{
     uint _chainId;
 
   struct LavaPacket {
-    string methodName;
+    bytes methodName;
     address relayAuthority; //either a contract or an account
     address from;
     address to;
@@ -184,7 +184,7 @@ contract LavaWallet is ECRecovery{
 
 
   bytes32 constant LAVAPACKET_TYPEHASH = keccak256(
-      "LavaPacket(string methodName,address relayAuthority,address from,address to,address wallet,address token,uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce)"
+      "LavaPacket(bytes methodName,address relayAuthority,address from,address to,address wallet,address token,uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce)"
   );
 
 
@@ -195,7 +195,7 @@ contract LavaWallet is ECRecovery{
 
 
 
-   function getLavaPacketHash(string memory methodName, address relayAuthority,address from,address to, address wallet, address token, uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce) public pure returns (bytes32) {
+   function getLavaPacketHash(bytes memory methodName, address relayAuthority,address from,address to, address wallet, address token, uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce) public pure returns (bytes32) {
           return keccak256(abi.encode(
               LAVAPACKET_TYPEHASH,
               keccak256(bytes(methodName)),
@@ -226,7 +226,7 @@ contract LavaWallet is ECRecovery{
 
 
     // Make sure the change the chainID here if deploying to a testnet
-      function getLavaTypedDataHash(string memory methodName, address relayAuthority,address from,address to, address wallet,address token,uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce) public view returns (bytes32) {
+      function getLavaTypedDataHash(bytes memory methodName, address relayAuthority,address from,address to, address wallet,address token,uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce) public view returns (bytes32) {
 
 
               // Note: we need to use `encodePacked` here instead of `encode`.
@@ -245,7 +245,7 @@ contract LavaWallet is ECRecovery{
 
         */
 
-   function _validatePacketSignature(  string memory methodName, address relayAuthority,address from,address to, address token,uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce,  bytes memory signature) internal returns (bool success)
+   function _validatePacketSignature(  bytes memory methodName, address relayAuthority,address from,address to, address token,uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce,  bytes memory signature) internal returns (bool success)
    {
        address wallet = address(this);
 
@@ -299,32 +299,32 @@ contract LavaWallet is ECRecovery{
 
     */
 
-    function transferAndCallWithSignature( string memory methodName, address relayAuthority,address from,address to,   address token, uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce, bytes memory signature ) public returns (bool success)   {
+    function transferAndCallWithSignature( bytes memory methodName, address relayAuthority,address from,address to,   address token, uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce, bytes memory signature ) public returns (bool success)   {
 
-       require(!bytesEqual('transfer',bytes(methodName)), 'Invalid methodname');
+       require(!bytesEqual('transfer',(methodName)), 'Invalid methodname');
 
        require(_validatePacketSignature(methodName,relayAuthority,from,to, token,tokens,relayerRewardTokens,expires,nonce, signature));
 
        //transfer the tokens to the 'to' field address
        require( ERC20Interface(token).transferFrom(from, to, tokens ), 'Unable to Transfer Tokens'  );
 
-       bytes memory method = bytes(methodName);
+       
 
-       require( _sendTransferAndCall(from,to,token,tokens,method), 'Remote execution failure' );
+       require( TransferAndCallFallBack(to).receiveTransfer(from, tokens, token,  methodName ) , 'Remote execution failure' );
 
        return true;
     }
 
     function _sendTransferAndCall(address from, address to, address token, uint tokens, bytes memory methodName) internal returns (bool)
     {
-        return TransferAndCallFallBack(to).receiveTransfer(from, tokens, token, bytes(methodName));
+        return TransferAndCallFallBack(to).receiveTransfer(from, tokens, token,  methodName );
     }
 
 
-   function transferTokensWithSignature(string memory methodName, address relayAuthority, address from, address to, address token, uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce, bytes memory signature) public returns (bool success)
+   function transferTokensWithSignature(bytes memory methodName, address relayAuthority, address from, address to, address token, uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce, bytes memory signature) public returns (bool success)
  {
 
-     require(bytesEqual('transfer',bytes(methodName)), 'Invalid methodname');
+     require(bytesEqual('transfer',(methodName)), 'Invalid methodname');
 
      require(_validatePacketSignature(methodName,relayAuthority,from,to, token,tokens,relayerRewardTokens,expires,nonce, signature));
      
@@ -334,7 +334,7 @@ contract LavaWallet is ECRecovery{
      return true;
  }
 
- function burnSignature(string memory methodName, address relayAuthority, address from, address to, address wallet,address token,uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce,  bytes memory signature) public returns (bool success)
+ function burnSignature(bytes memory methodName, address relayAuthority, address from, address to, address wallet,address token,uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce,  bytes memory signature) public returns (bool success)
       {
 
 
@@ -363,7 +363,7 @@ contract LavaWallet is ECRecovery{
        return (burnedSignatures[digest]);
      }
 
-     function signatureIsValid(string memory methodName, address relayAuthority,address from,address to, address wallet,address token, uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce, bytes memory signature) public view returns (bool success)
+     function signatureIsValid(bytes memory methodName, address relayAuthority,address from,address to, address wallet,address token, uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce, bytes memory signature) public view returns (bool success)
    {
 
         //check to make sure that signature == ecrecover signature
