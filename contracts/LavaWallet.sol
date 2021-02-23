@@ -11,7 +11,7 @@ LAVAWALLET is a Meta Transaction Solution using EIP 712
 Simply approve your tokens to this contract to give them super powers!
 
 
-Version 0.25
+Version 0.251
 
 */
 
@@ -315,11 +315,7 @@ contract LavaWallet is ECRecovery{
        return true;
     }
 
-    function _sendTransferAndCall(address from, address to, address token, uint tokens, bytes memory methodName) internal returns (bool)
-    {
-        return TransferAndCallFallBack(to).receiveTransfer(from, tokens, token,  methodName );
-    }
-
+    
 
    function transferTokensWithSignature(bytes memory methodName, address relayAuthority, address from, address to, address token, uint256 tokens,uint256 relayerRewardTokens,uint256 expires,uint256 nonce, bytes memory signature) public returns (bool success)
  {
